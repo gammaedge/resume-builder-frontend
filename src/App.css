@@ -1,0 +1,66 @@
+.App {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  /* page-break-inside: avoid; */
+}
+.loader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btndownContainer {
+  position: fixed;
+  bottom: 75px;
+  right: 60px;
+  z-index: 1000;
+}
+
+.btndown {
+  background-color: #4CAF50; 
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.btndown:hover {
+  background-color: #45a049;
+}
+
+.btndown svg {
+  margin-right: 8px; 
+}
+
+@media print {
+  .page-break {
+    page-break-before: always;
+  }
+
+  .avoid-break {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* Ensure the PDF respects the A4 size */
+.pdf-container {
+  width: 210mm;
+  min-height: 297mm;
+  margin: auto;
+  /* padding: 20mm; */
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* .section {
+  margin-bottom: 20px;
+} */
