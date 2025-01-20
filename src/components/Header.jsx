@@ -14,12 +14,14 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-const Header = ({candidateDetails, rolesAndResponsibilities }) => {
+const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
   console.log(rolesAndResponsibilities, "dkakddka");
-  const [name, setName] = useState("Ayush Bairagi");
-  const [role, setRole] = useState("Full Stack Python Engineer");
+  const [name, setName] = useState(candidateDetails.name);
+  const [role, setRole] = useState(candidateDetails.role);
   const [about, setAbout] = useState(rolesAndResponsibilities.summary);
-  const [skills, setSkills] = useState(rolesAndResponsibilities.tools_and_technologies);
+  const [skills, setSkills] = useState(
+    rolesAndResponsibilities.tools_and_technologies
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
 
@@ -130,11 +132,32 @@ const Header = ({candidateDetails, rolesAndResponsibilities }) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       background: "#fff",
-      padding: "20px",
       borderRadius: "8px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
       zIndex: 1000,
       minWidth: "300px",
+    },
+    card: {
+      height: "254px",
+      padding: "0 15px",
+      textAlign: "center",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      gap: "12px",
+      background: "#fff",
+      borderRadius: "20px",
+    },
+    card__title: {
+      fontSize: "23px",
+      fontWeight: "900",
+      color: "#333",
+    },
+    card__form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px",
     },
     overlay: {
       position: "fixed",
@@ -146,16 +169,22 @@ const Header = ({candidateDetails, rolesAndResponsibilities }) => {
       zIndex: 999,
     },
     button: {
-      padding: "5px 10px",
-      fontSize: "1rem",
-      cursor: "pointer",
-      marginRight: "10px",
+      border: "0",
+      background: "#111",
+      color: "#fff",
+      padding: "0.68em",
+      borderRadius: "14px",
+      fontWeight: "bold",
     },
     input: {
-      width: "90%",
-      padding: "10px",
-      marginBottom: "10px",
-      fontSize: "1rem",
+      marginTop: "10px",
+      outline: "0",
+      background: "rgb(255, 255, 255)",
+      boxShadow: "transparent 0px 0px 0px 1px inset",
+      padding: "0.6em",
+      borderRadius: "14px",
+      border: "1px solid #333",
+      color: "black",
     },
     removeIcon: {
       marginLeft: "10px",
@@ -169,13 +198,13 @@ const Header = ({candidateDetails, rolesAndResponsibilities }) => {
     <>
       <div style={styles.header}>
         <ContentEditable
-          html={candidateDetails.name}
+          html={name}
           tagName="h1"
           onChange={handleNameChange}
           style={styles.h1}
         />
         <ContentEditable
-          html={candidateDetails.role}
+          html={role}
           tagName="p"
           onChange={handleRoleChange}
           style={styles.p}
@@ -256,23 +285,10 @@ const Header = ({candidateDetails, rolesAndResponsibilities }) => {
 
       {/* Skills Section */}
       <div style={styles.section}>
-        <style>
-          {`
-          @media print {
-            .no-print {
-              display: none !important;
-            }
-          }
-        `}
-        </style>
         <h2 style={styles.sectionTitle}>
           <FaTools style={styles.icon} /> Skills
-          <div
-            className="no-print"
-            style={styles.addIcon}
-            onClick={() => setIsModalOpen(true)}
-          >
-            <FaPlus />
+          <div style={styles.addIcon} onClick={() => setIsModalOpen(true)}>
+            <FaPlus className="no-print" />
           </div>
         </h2>
         <div style={styles.skills}>
@@ -294,18 +310,20 @@ const Header = ({candidateDetails, rolesAndResponsibilities }) => {
           <>
             <div style={styles.overlay} onClick={() => setIsModalOpen(false)} />
             <div style={styles.modal}>
-              <h3>Add New Skill</h3>
-              <input
-                type="text"
-                style={styles.input}
-                value={newSkill}
-                onChange={(e) => setNewSkill(e.target.value)}
-                placeholder="Enter skill name"
-              />
-              <div>
-                <button style={styles.button} onClick={handleAddSkill}>
-                  Save
-                </button>
+              <div style={styles.card}>
+                <span style={styles.card__title}>Add New Skill</span>
+                <div style={styles.card__form}>
+                  <input
+                    type="text"
+                    style={styles.input}
+                    value={newSkill}
+                    onChange={(e) => setNewSkill(e.target.value)}
+                    placeholder="Enter skill name"
+                  />
+                  <button style={styles.button} onClick={handleAddSkill}>
+                    + Add
+                  </button>
+                </div>
               </div>
             </div>
           </>

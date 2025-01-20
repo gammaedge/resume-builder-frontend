@@ -94,7 +94,7 @@ const Workexperience = () => {
       cursor: "pointer",
       // fontSize: "1rem",
       marginLeft: "10px",
-      width:"25px"
+      width: "25px",
     },
     modal: {
       position: "fixed",
@@ -102,8 +102,7 @@ const Workexperience = () => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       background: "#fff",
-      padding: "20px",
-      borderRadius: "8px",
+      borderRadius: "5px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
       zIndex: 1000,
       minWidth: "300px",
@@ -117,18 +116,50 @@ const Workexperience = () => {
       background: "rgba(0, 0, 0, 0.5)",
       zIndex: 999,
     },
+    card: {
+      height: "254px",
+      padding: "0 15px",
+      textAlign: "center",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      gap: "12px",
+      background: "#fff",
+      borderRadius: "20px",
+    },
+    card__title: {
+      fontSize: "23px",
+      fontWeight: "900",
+      color: "#333",
+    },
+    card__form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px",
+      alignItems:"center"
+    },
+   
     button: {
-      padding: "5px 10px",
-      fontSize: "1rem",
-      cursor: "pointer",
-      marginRight: "10px",
+      border: "0",
+      background: "#111",
+      color: "#fff",
+      padding: "0.68em",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      width:"40%"
     },
     textarea: {
-      width: "90%",
-      padding: "10px",
-      marginBottom: "10px",
-      fontSize: "1rem",
-      resize: "vertical",
+      marginTop: "10px",
+      minWidth:"20rem",
+      outline: "0",
+      background: "rgb(255, 255, 255)",
+      boxShadow: "transparent 0px 0px 0px 1px inset",
+      padding: "0.6em",
+      borderRadius: "5px",
+      border: "1px solid #333",
+      color: "black",
+      resize: "none",
     },
   };
 
@@ -172,7 +203,7 @@ const Workexperience = () => {
         {workPoints.map((point, index) => (
           <>
             {" "}
-            <div style={{display: "flex"}}>
+            <div style={{ display: "flex" }}>
               <li key={index} style={styles.listItem}>
                 <span>{point}</span>
               </li>
@@ -203,18 +234,23 @@ const Workexperience = () => {
             onClick={() => setIsModalOpen(false)}
           />
           <div className="no-print" style={styles.modal}>
-            <h3>{editingIndex !== null ? "Edit Point" : "Add New Point"}</h3>
-            <textarea
-              style={styles.textarea}
-              value={currentPoint}
-              onChange={(e) => setCurrentPoint(e.target.value)}
-              placeholder="Enter work experience point"
-              rows={4}
-            />
-            <div>
-              <button style={styles.button} onClick={handleAddOrEditPoint}>
-                Save
-              </button>
+            <div style={styles.card}>
+              <span style={styles.card__title}>
+                {editingIndex !== null ? "Edit Point" : "Add New Point"}
+              </span>
+              <div style={styles.card__form}>
+                {" "}
+                <textarea
+                  style={styles.textarea}
+                  value={currentPoint}
+                  onChange={(e) => setCurrentPoint(e.target.value)}
+                  placeholder="Enter work experience point"
+                  rows={6}
+                />
+                <button style={styles.button} onClick={handleAddOrEditPoint}>
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </>

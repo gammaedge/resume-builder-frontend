@@ -4,8 +4,8 @@ import EducationAndOther from "./components/EducationAndOther";
 import Header from "./components/Header";
 import Project from "./components/Projects";
 import Workexperience from "./components/Workexperience";
-import html2pdf from "html2pdf.js";
-import { FaDownload } from "react-icons/fa";
+// import html2pdf from "html2pdf.js";
+// import { FaDownload } from "react-icons/fa";
 import { useRef } from "react";
 import Careerandprofile from "./components/Careerandprofile";
 import Startmodal from "./StartPage/Startmodal";
@@ -113,8 +113,7 @@ function App() {
 
   return (
     <>
-      {/* {isModalOpen && <div className="overlay"></div>} */}
-      <div ref={ref} className="App pdf-container">
+      <div ref={ref} className="App">
         {loading ? (
           <div className="loader">
             <ClipLoader color="#20ddc0" size={50} />

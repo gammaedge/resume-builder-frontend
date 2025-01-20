@@ -5,7 +5,7 @@ import ContentEditable from "react-contenteditable";
 
 const Project = ({ projectDetails }) => {
   const [projects, setProjects] = useState(projectDetails);
-  const [role, setRole] = useState("Software Developer");
+  const [roles, setRoles] = useState(projects.map(() => "Software Developer"));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState({
     name: "",
@@ -14,7 +14,7 @@ const Project = ({ projectDetails }) => {
     description: "",
   });
   const [editingIndex, setEditingIndex] = useState(null);
-  const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
+ 
 
   // File CSS
   const styles = {
@@ -172,9 +172,12 @@ const Project = ({ projectDetails }) => {
     setProjects(updatedProjects);
   };
 
-  const handleRoleChange = (event) => {
-    setRole(sanitizeInput(event.target.value));
+  const handleRoleChange = (event, index) => {
+    const updatedRoles = [...roles];
+    updatedRoles[index] = event.target.value;
+    setRoles(updatedRoles);
   };
+   
 
   return (
     <div style={styles.section}>
@@ -210,11 +213,17 @@ const Project = ({ projectDetails }) => {
               {" "}
               <b>Role: </b>{" "}
               <ContentEditable
-                html={role}
-                tagName="p"
-                onChange={handleRoleChange}
-                style={{padding : "5px",margin:"0"}}
-              />{" "}
+              html={roles[index]} 
+              tagName="p"
+              onChange={(e) =>
+                handleRoleChange(
+                  { target: { value: e.target.value } }, 
+                  index
+                )
+              } 
+              style={{ padding: "5px", margin: "0" }}
+            
+            /> 
             </p>
             <ul style={styles.list}>
               {Array.isArray(

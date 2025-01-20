@@ -117,7 +117,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     textarea: {
       resize: "none",
       height: "100px",
-      marginBottom:"5px"
+      marginBottom: "5px",
     },
     button: {
       backgroundColor: "#3366cc",
@@ -128,7 +128,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
       fontSize: "16px",
       cursor: "pointer",
       transition: "all 0.3s ease",
-      marginTop:"5px"
+      marginTop: "5px",
     },
     buttonHover: {
       backgroundColor: "#27408b",
@@ -137,6 +137,13 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
       textAlign: "center",
       fontSize: "15px",
       fontWeight: "600",
+    },
+    projectGrid: {
+      display: "flex", 
+      flexWrap: "wrap", 
+      gap: "5px", 
+      padding: "10px",
+      justifyContent: "flex-start",
     },
     project: {
       fontSize: "13px",
@@ -206,7 +213,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
           }}
         >
           <div style={styles.card}>
-            <span style={styles.title}>Enter Your Details</span>
+            <span style={styles.title}>Enter Resume Details</span>
             <form style={styles.form} onSubmit={handleFormSubmit}>
               <div style={styles.group}>
                 <input
@@ -363,23 +370,25 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                 </label>
               </div>
               <div style={styles.pjtitle}>Add Projects</div>
-              {projectList.map((project) => (
-                <div style={styles.project} key={project._id.$oid}>
-                  <input
-                    type="checkbox"
-                    id={project._id.$oid}
-                    checked={selectedProjects.includes(project._id.$oid)}
-                    onChange={() =>
-                      setSelectedProjects((prev) =>
-                        prev.includes(project._id.$oid)
-                          ? prev.filter((id) => id !== project._id.$oid)
-                          : [...prev, project._id.$oid]
-                      )
-                    }
-                  />
-                  <label htmlFor={project._id.$oid}>{project.name}</label>
-                </div>
-              ))}
+              <div style={styles.projectGrid}>
+                {projectList.map((project) => (
+                  <div style={styles.project} key={project._id.$oid}>
+                    <input
+                      type="checkbox"
+                      id={project._id.$oid}
+                      checked={selectedProjects.includes(project._id.$oid)}
+                      onChange={() =>
+                        setSelectedProjects((prev) =>
+                          prev.includes(project._id.$oid)
+                            ? prev.filter((id) => id !== project._id.$oid)
+                            : [...prev, project._id.$oid]
+                        )
+                      }
+                    />
+                    <label htmlFor={project._id.$oid}>{project.name}</label>
+                  </div>
+                ))}
+              </div>
 
               <button
                 type="submit"
