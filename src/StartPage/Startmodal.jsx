@@ -117,7 +117,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     textarea: {
       resize: "none",
       height: "100px",
-      marginBottom:"0"
+      marginBottom:"5px"
     },
     button: {
       backgroundColor: "#3366cc",
@@ -128,6 +128,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
       fontSize: "16px",
       cursor: "pointer",
       transition: "all 0.3s ease",
+      marginTop:"5px"
     },
     buttonHover: {
       backgroundColor: "#27408b",
@@ -135,15 +136,24 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     pjtitle: {
       textAlign: "center",
       fontSize: "15px",
-      fontWeight: "600"
+      fontWeight: "600",
     },
-    project:{
+    project: {
       fontSize: "13px",
-       fontWeight: "400"
+      fontWeight: "400",
+      display: "flex",
+      alignItems: "center",
+    },
+    checks: {
+      display: "flex",
+      alignItems: "center",
     },
     eduwork: {
+      fontSize: "13px",
+      fontWeight: "400",
       display: "flex",
       justifyContent: "space-between",
+      marginBottom: "10px",
     },
   };
 
@@ -275,7 +285,58 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   Experience
                 </label>
               </div>
-
+              <div style={styles.eduwork}>
+                <div>
+                  <label style={styles.checks}>
+                    <input
+                      type="checkbox"
+                      checked={includeEducation}
+                      onChange={(e) => setIncludeEducation(e.target.checked)}
+                    />
+                    Include Education
+                  </label>
+                  {includeEducation && (
+                    <>
+                      {/* <textarea
+                  placeholder="Enter Max Degree college Name"
+                  value={educationDetails}
+                  onChange={(e) => setEducationDetails(e.target.value)}
+                  required
+                /> */}
+                      <div>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={includeInterests}
+                            onChange={(e) =>
+                              setIncludeInterests(e.target.checked)
+                            }
+                          />
+                          Include Interests
+                        </label>
+                        {/* {includeInterests && (
+                <textarea
+                  placeholder="Enter Interest Details"
+                  value={interestDetails}
+                  onChange={(e) => setInterestDetails(e.target.value)}
+                  required
+                />
+              )} */}
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div>
+                  <label style={styles.checks}>
+                    <input
+                      type="checkbox"
+                      checked={includeExperiance}
+                      onChange={(e) => setIncludeExperiance(e.target.checked)}
+                    />
+                    Include Experiance
+                  </label>
+                </div>
+              </div>
               <div style={styles.group}>
                 <textarea
                   style={{
@@ -320,58 +381,6 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                 </div>
               ))}
 
-              <div style={styles.eduwork}>
-                <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={includeEducation}
-                      onChange={(e) => setIncludeEducation(e.target.checked)}
-                    />
-                    Include Education
-                  </label>
-                  {includeEducation && (
-                    <>
-                      {/* <textarea
-                  placeholder="Enter Max Degree college Name"
-                  value={educationDetails}
-                  onChange={(e) => setEducationDetails(e.target.value)}
-                  required
-                /> */}
-                      <div>
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={includeInterests}
-                            onChange={(e) =>
-                              setIncludeInterests(e.target.checked)
-                            }
-                          />
-                          Include Interests
-                        </label>
-                        {/* {includeInterests && (
-                <textarea
-                  placeholder="Enter Interest Details"
-                  value={interestDetails}
-                  onChange={(e) => setInterestDetails(e.target.value)}
-                  required
-                />
-              )} */}
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div>
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={includeExperiance}
-                      onChange={(e) => setIncludeExperiance(e.target.checked)}
-                    />
-                    Include Experiance
-                  </label>
-                </div>
-              </div>
               <button
                 type="submit"
                 style={{

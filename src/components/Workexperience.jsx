@@ -75,10 +75,9 @@ const Workexperience = () => {
       gap: "10px",
     },
     listItem: {
-      marginBottom: "10px",
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+      marginBottom: "5px",
+      // justifyContent: "space-between",
+      // alignItems: "center",
     },
     addIcon: {
       color: "#000",
@@ -93,8 +92,9 @@ const Workexperience = () => {
     },
     actionIcons: {
       cursor: "pointer",
-      fontSize: "1rem",
+      // fontSize: "1rem",
       marginLeft: "10px",
+      width:"25px"
     },
     modal: {
       position: "fixed",
@@ -168,23 +168,29 @@ const Workexperience = () => {
           />
         </div>
       </p>
-      <ul >
+      <ul>
         {workPoints.map((point, index) => (
-          <li key={index} style={styles.listItem}>
-            <span>{point}</span>
-            <div>
+          <>
+            {" "}
+            <div style={{display: "flex"}}>
+              <li key={index} style={styles.listItem}>
+                <span>{point}</span>
+              </li>
+
               <FaEdit
+                className="no-print"
                 style={styles.actionIcons}
                 onClick={() => handleEdit(index)}
                 title="Edit"
               />
               <FaTimes
+                className="no-print"
                 style={{ ...styles.actionIcons, color: "#ff4d4d" }}
                 onClick={() => handleDelete(index)}
                 title="Delete"
               />
             </div>
-          </li>
+          </>
         ))}
       </ul>
 

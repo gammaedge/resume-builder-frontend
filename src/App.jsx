@@ -69,27 +69,25 @@ function App() {
     }
   };
 
-  const generatePdf = () => {
-    const element = ref.current;
-    const options = {
-      margin: [1, 1], // Top, left, right, bottom
-      filename: "resume.pdf",
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        logging: true,
-        useCORS: true,
-      },
-      jsPDF: {
-        unit: "mm",
-        format: "a4",
-        orientation: "portrait",
-      },
-      pagebreak: { mode: ["avoid-all", "css", "legacy"] },
-    };
-
-    html2pdf().from(element).set(options).save();
-  };
+  // const generatePdf = () => {
+  //   const element = ref.current;
+  //   const options = {
+  //     margin: [0, 0],
+  //     filename: "resume.pdf",
+  //     image: { type: "jpeg", quality: 0.98 },
+  //     html2canvas: {
+  //       scale: 2,
+  //       logging: true,
+  //       useCORS: true,
+  //     },
+  //     jsPDF: {
+  //       unit: "mm",
+  //       format: "a4",
+  //       orientation: "portrait",
+  //     },
+  //   };
+  //   html2pdf().from(element).set(options).save();
+  // };
 
   const handleModalSubmit = (
     candidatename,
@@ -143,7 +141,7 @@ function App() {
                   <Workexperience />
                 </div>
               )}
-              
+
               <div className="section page-break">
                 <Project projectDetails={projectDetails} />
               </div>
@@ -157,13 +155,13 @@ function App() {
           )
         )}
       </div>
-      {!isModalOpen && (
+      {/* {!isModalOpen && (
         <div className="btndownContainer">
           <button className="btndown" onClick={generatePdf}>
             <FaDownload /> Download
           </button>
         </div>
-      )}
+      )} */}
       <Startmodal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
