@@ -14,8 +14,30 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
   const [includeEducation, setIncludeEducation] = useState(false);
   //   const [educationDetails, setEducationDetails] = useState({});
   const [includeInterests, setIncludeInterests] = useState(false);
+  const [includeExperiance, setIncludeExperiance] = useState(false);
   //   const [interestDetails, setInterestDetails] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [focusedField, setFocusedField] = useState("");
+
+  const handleFocus = (field) => {
+    setFocusedField(field);
+  };
+
+  const handleBlur = (field) => {
+    if (field === "candidatename" && !candidatename) {
+      setFocusedField("");
+    }
+    if (field === "designation" && !designation) {
+      setFocusedField("");
+    }
+    if (field === "experience" && !experience) {
+      setFocusedField("");
+    }
+    if (field === "jd" && !jd) {
+      setFocusedField("");
+    }
+  };
 
   const styles = {
     loader: {
@@ -36,10 +58,92 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
       transform: "translate(-50%, -50%)",
       width: "400px",
     },
-    heading: {
+    card: {
+      backgroundColor: "#fff",
+      borderRadius: "10px",
+      padding: "5px 20px",
+      width: "350px",
+      display: "flex",
+      flexDirection: "column",
+    },
+    form: {
+      marginTop: "20px",
+      display: "flex",
+      flexDirection: "column",
+    },
+    title: {
       textAlign: "center",
-      fontSize: "1.2rem",
-      fontWeight: "bold",
+      fontSize: "24px",
+      fontWeight: "600",
+    },
+    group: {
+      position: "relative",
+    },
+    inputarea: {
+      padding: "10px",
+      marginBottom: "15px",
+      borderRadius: "5px",
+      border: "1px solid rgba(0, 0, 0, 0.2)",
+      outline: "none",
+      width: "100%",
+      backgroundColor: "transparent",
+      transition: "border-color 0.3s ease",
+      caretColor: "auto",
+      color: "black",
+    },
+    label: {
+      fontSize: "14px",
+      color: "rgba(99, 102, 102, 0.8)",
+      position: "absolute",
+      top: "10px",
+      left: "10px",
+      backgroundColor: "#fff",
+      transition: "all 0.3s ease",
+      padding: "0 4px",
+      pointerEvents: "none",
+    },
+    labelFloating: {
+      top: "-5px",
+      left: "10px",
+      backgroundColor: "#fff",
+      color: "#3366cc",
+      fontWeight: "600",
+      fontSize: "10px",
+    },
+    inputFocus: {
+      borderColor: "#3366cc",
+      outline: "none",
+    },
+    textarea: {
+      resize: "none",
+      height: "100px",
+      marginBottom:"0"
+    },
+    button: {
+      backgroundColor: "#3366cc",
+      color: "#fff",
+      border: "none",
+      borderRadius: "5px",
+      padding: "10px",
+      fontSize: "16px",
+      cursor: "pointer",
+      transition: "all 0.3s ease",
+    },
+    buttonHover: {
+      backgroundColor: "#27408b",
+    },
+    pjtitle: {
+      textAlign: "center",
+      fontSize: "15px",
+      fontWeight: "600"
+    },
+    project:{
+      fontSize: "13px",
+       fontWeight: "400"
+    },
+    eduwork: {
+      display: "flex",
+      justifyContent: "space-between",
     },
   };
 
@@ -63,10 +167,11 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit(candidatename, designation,jd, experience, selectedProjects, {
+    onSubmit(candidatename, designation, jd, experience, selectedProjects, {
       includeEducation,
       //   educationDetails,
       includeInterests,
+      includeExperiance,
       //   interestDetails,
     });
   };
@@ -90,45 +195,115 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
             },
           }}
         >
-          <h2 style={styles.heading}>Enter Your Details</h2>
-          <form onSubmit={handleFormSubmit}>
-            <div>
-                <label style={styles.label}>Name : </label>
+          <div style={styles.card}>
+            <span style={styles.title}>Enter Your Details</span>
+            <form style={styles.form} onSubmit={handleFormSubmit}>
+              <div style={styles.group}>
                 <input
-                    value={candidatename}
-                    type="text"
-                    onChange={(e) => setCandidatename(e.target.value)}
-                  />
-            </div>
-            <div>
-                <label style={styles.label}>Designation : </label>
+                  style={{
+                    ...styles.inputarea,
+                    ...(focusedField === "candidatename" || candidatename
+                      ? styles.inputareaFocus
+                      : {}),
+                  }}
+                  value={candidatename}
+                  type="text"
+                  onChange={(e) => setCandidatename(e.target.value)}
+                  onFocus={() => handleFocus("candidatename")}
+                  onBlur={() => handleBlur("candidatename")}
+                />
+                <label
+                  style={{
+                    ...styles.label,
+                    ...(focusedField === "candidatename" || candidatename
+                      ? styles.labelFloating
+                      : {}),
+                  }}
+                >
+                  Name
+                </label>
+              </div>
+
+              <div style={styles.group}>
                 <input
-                    value={designation}
-                    type="text"
-                    onChange={(e) => setDesignation(e.target.value)}
-                  />
-            </div>
-            <div>
-              <label>Job Description (JD):</label>
-              <textarea
-                value={jd}
-                onChange={(e) => setJd(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label>Experience:</label>
-              <input
-                type="text"
-                value={experience}
-                onChange={(e) => setExperience(e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label>Select Projects:</label>
+                  style={{
+                    ...styles.inputarea,
+                    ...(focusedField === "designation" || designation
+                      ? styles.inputareaFocus
+                      : {}),
+                  }}
+                  value={designation}
+                  type="text"
+                  onChange={(e) => setDesignation(e.target.value)}
+                  onFocus={() => handleFocus("designation")}
+                  onBlur={() => handleBlur("designation")}
+                />
+                <label
+                  style={{
+                    ...styles.label,
+                    ...(focusedField === "designation" || designation
+                      ? styles.labelFloating
+                      : {}),
+                  }}
+                >
+                  Designation
+                </label>
+              </div>
+
+              <div style={styles.group}>
+                <input
+                  style={{
+                    ...styles.inputarea,
+                    ...(focusedField === "experience" || experience
+                      ? styles.inputareaFocus
+                      : {}),
+                  }}
+                  value={experience}
+                  type="text"
+                  onChange={(e) => setExperience(e.target.value)}
+                  onFocus={() => handleFocus("experience")}
+                  onBlur={() => handleBlur("experience")}
+                />
+                <label
+                  style={{
+                    ...styles.label,
+                    ...(focusedField === "experience" || experience
+                      ? styles.labelFloating
+                      : {}),
+                  }}
+                >
+                  Experience
+                </label>
+              </div>
+
+              <div style={styles.group}>
+                <textarea
+                  style={{
+                    ...styles.inputarea,
+                    ...styles.textarea,
+                    ...(focusedField === "jd" || jd
+                      ? styles.inputareaFocus
+                      : {}),
+                  }}
+                  value={jd}
+                  onChange={(e) => setJd(e.target.value)}
+                  onFocus={() => handleFocus("jd")}
+                  onBlur={() => handleBlur("jd")}
+                />
+                <label
+                  style={{
+                    ...styles.label,
+                    ...(focusedField === "jd" || jd
+                      ? styles.labelFloating
+                      : {}),
+                  }}
+                >
+                  Job Description (JD)
+                </label>
+              </div>
+              <div style={styles.pjtitle}>Add Projects</div>
               {projectList.map((project) => (
-                <div key={project._id.$oid}>
+                <div style={styles.project} key={project._id.$oid}>
                   <input
                     type="checkbox"
                     id={project._id.$oid}
@@ -144,34 +319,37 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   <label htmlFor={project._id.$oid}>{project.name}</label>
                 </div>
               ))}
-            </div>
-            <div>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={includeEducation}
-                  onChange={(e) => setIncludeEducation(e.target.checked)}
-                />
-                Include Education
-              </label>
-              {includeEducation && (
-                <>
-                  {/* <textarea
+
+              <div style={styles.eduwork}>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={includeEducation}
+                      onChange={(e) => setIncludeEducation(e.target.checked)}
+                    />
+                    Include Education
+                  </label>
+                  {includeEducation && (
+                    <>
+                      {/* <textarea
                   placeholder="Enter Max Degree college Name"
                   value={educationDetails}
                   onChange={(e) => setEducationDetails(e.target.value)}
                   required
                 /> */}
-                  <div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={includeInterests}
-                        onChange={(e) => setIncludeInterests(e.target.checked)}
-                      />
-                      Include Interests
-                    </label>
-                    {/* {includeInterests && (
+                      <div>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={includeInterests}
+                            onChange={(e) =>
+                              setIncludeInterests(e.target.checked)
+                            }
+                          />
+                          Include Interests
+                        </label>
+                        {/* {includeInterests && (
                 <textarea
                   placeholder="Enter Interest Details"
                   value={interestDetails}
@@ -179,13 +357,34 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   required
                 />
               )} */}
-                  </div>
-                </>
-              )}
-            </div>
-
-            <button type="submit">Submit</button>
-          </form>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={includeExperiance}
+                      onChange={(e) => setIncludeExperiance(e.target.checked)}
+                    />
+                    Include Experiance
+                  </label>
+                </div>
+              </div>
+              <button
+                type="submit"
+                style={{
+                  ...styles.button,
+                  ...(isButtonHovered ? styles.buttonHover : {}),
+                }}
+                onMouseEnter={() => setIsButtonHovered(true)}
+                onMouseLeave={() => setIsButtonHovered(false)}
+              >
+                Submit
+              </button>
+            </form>
+          </div>
         </Modal>
       )}
     </>

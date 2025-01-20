@@ -33,7 +33,11 @@ function App() {
   });
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const [eduhobby, setEduhobby] = useState({ edu: false, hobby: false });
+  const [eduhobby, setEduhobby] = useState({
+    edu: false,
+    hobby: false,
+    experiance: false,
+  });
 
   const fetchProjects = async (jd, experience, selectedProjects) => {
     try {
@@ -83,22 +87,26 @@ function App() {
       },
       pagebreak: { mode: ["avoid-all", "css", "legacy"] },
     };
-  
+
     html2pdf().from(element).set(options).save();
   };
-  
+
   const handleModalSubmit = (
     candidatename,
     designation,
     jd,
     experience,
     selectedProjects,
-    { includeEducation, includeInterests }
+    { includeEducation, includeInterests, includeExperiance }
   ) => {
     if (jd && experience && selectedProjects.length > 0) {
       setIsModalOpen(false);
       fetchProjects(jd, experience, selectedProjects);
-      setEduhobby({ edu: includeEducation, hobby: includeInterests });
+      setEduhobby({
+        edu: includeEducation,
+        hobby: includeInterests,
+        experiance: includeExperiance,
+      });
       setCandidateDetails({ name: candidatename, role: designation });
     } else {
       alert("Please fill out all fields before submitting.");
@@ -130,11 +138,12 @@ function App() {
                   }
                 />
               </div>
-
-              <div className="section page-break">
-                <Workexperience />
-              </div>
-
+              {eduhobby.experiance && (
+                <div className="section page-break">
+                  <Workexperience />
+                </div>
+              )}
+              
               <div className="section page-break">
                 <Project projectDetails={projectDetails} />
               </div>
