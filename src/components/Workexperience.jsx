@@ -194,6 +194,7 @@ const Workexperience = () => {
       resize: "none",
     },
     button: {
+      marginTop:"5px",
       border: "0",
       background: "#111",
       color: "#fff",
@@ -236,7 +237,7 @@ const Workexperience = () => {
               onClick={() => handleDeleteExperience(workExperienceIndex)}
             />
           </div>
-          <p>
+          <p style={{ margin: "0" }}>
             <ContentEditable
               html={workExperience.experience}
               onChange={(e) => handleEditExperience(e, workExperienceIndex)}
@@ -280,7 +281,7 @@ const Workexperience = () => {
           />
           <div style={styles.modal}>
             <div style={styles.card}>
-              <span style={styles.card__title}>Add New Skill</span>
+              <span style={styles.card__title}>Add New Experience</span>
               <div style={styles.card__form}>
                 <input
                   style={styles.input}
@@ -299,9 +300,10 @@ const Workexperience = () => {
                   value={newWorkPoints}
                   onChange={(e) => setNewWorkPoints(e.target.value)}
                   placeholder="Work Points (separate by new lines)"
+                  rows={10}
                 />
                 <button style={styles.button} onClick={handleAddExperience}>
-                  Add Experience
+                 + Add
                 </button>
               </div>
             </div>
@@ -314,16 +316,19 @@ const Workexperience = () => {
           <div style={styles.overlay} onClick={() => setIsModalOpen(false)} />
           <div style={styles.modal}>
             <div style={styles.card}>
-
+            <span style={styles.card__title}>Edit Work Point</span>
+            <div style={styles.card__form}>
               <textarea
                 style={styles.textarea}
                 value={currentPoint}
                 onChange={(e) => setCurrentPoint(e.target.value)}
                 placeholder="Edit Work Point"
+                rows={8}
               />
               <button style={styles.button} onClick={handleAddOrEditPoint}>
                 Save
               </button>
+              </div>
             </div>
           </div>
         </>
