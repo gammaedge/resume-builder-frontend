@@ -15,7 +15,6 @@ import {
 } from "react-icons/fa";
 
 const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
- 
   const [name, setName] = useState(candidateDetails.name);
   const [role, setRole] = useState(candidateDetails.role);
   const [about, setAbout] = useState(rolesAndResponsibilities.summary);
@@ -45,7 +44,11 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
     setNewSkill("");
     setIsModalOpen(false);
   };
-
+  const handleEditSkill = (event, index) => {
+    const updatedSkills = [...skills];
+    updatedSkills[index] = event.target.value;
+    setSkills(updatedSkills);
+  };
   const handleRemoveSkill = (index) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
     setSkills(updatedSkills);
@@ -105,16 +108,22 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       verticalAlign: "middle",
       marginRight: "5px",
     },
-    skills: {
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "15px",
-    },
-    skillItem: {
-      backgroundColor: "#f4f4f4",
-      padding: "5px 10px",
-      borderRadius: "5px",
-    },
+    // skills: {
+    //   display: "flex",
+    //   flexWrap: "wrap",
+    //   gap: "15px",
+    // },
+    // skillItem: {
+    //   backgroundColor: "#f4f4f4",
+    //   padding: "5px 10px",
+    //   borderRadius: "5px",
+    // },
+    // addSkill: {
+    //   display: "flex",
+    //   alignItems: "center",
+    //   marginTop: "15px",
+    //   gap: "10px",
+    // },
     addIcon: {
       color: "#000",
       padding: "10px",
@@ -168,6 +177,18 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       background: "rgba(0, 0, 0, 0.5)",
       zIndex: 999,
     },
+    list: {
+      fontSize:"14px",
+      display: "grid",
+      gridTemplateColumns: "repeat(4, 1fr)",
+      gap: "10px",
+      padding: "0 1rem",
+      margin: 0,
+      listStyleType: "disc",
+    },
+    listItem: {
+      margin: 0,
+    },
     button: {
       border: "0",
       background: "#111",
@@ -187,10 +208,9 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       color: "black",
     },
     removeIcon: {
-      marginLeft: "10px",
       color: "#000",
       cursor: "pointer",
-      fontSize: "1rem",
+      fontSize: "14px",
     },
   };
 
@@ -291,19 +311,31 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
             <FaPlus className="no-print" />
           </div>
         </h2>
-        <div style={styles.skills}>
+
+        <ul style={styles.list}>
           {skills.map((skill, index) => (
-            <div key={index} style={styles.skillItem} className="skill-item">
-              {skill}
-              <FaTimes
-                className="no-print"
-                style={styles.removeIcon}
-                onClick={() => handleRemoveSkill(index)}
-                title="Remove skill"
-              />
-            </div>
+            <li key={index} style={styles.listItem}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "5px" }}
+              >
+                <ContentEditable
+                  html={skill}
+                  onChange={(e) => handleEditSkill(e, index)}
+                  style={{
+                    padding: "5px",
+                    borderRadius: "5px",
+                  }}
+                />
+                <FaTimes
+                  className="no-print"
+                  style={styles.removeIcon}
+                  onClick={() => handleRemoveSkill(index)}
+                  title="Remove skill"
+                />
+              </div>
+            </li>
           ))}
-        </div>
+        </ul>
 
         {/* Add skill box */}
         {isModalOpen && (

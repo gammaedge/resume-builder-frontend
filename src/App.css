@@ -43,6 +43,7 @@
 
 @media print {
   .no-print {
+    visibility: hidden;
     display: none !important;
   }
   .skills{
