@@ -45,6 +45,10 @@
   .no-print {
     display: none !important;
   }
+  .skills{
+    background-color: #f4f4f4 !important; 
+    color: black;
+  }
 }
 
 

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FaLaptopCode, FaPlus, FaEdit, FaTimes } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
 
-
 const Project = ({ projectDetails }) => {
   const [projects, setProjects] = useState(projectDetails);
   const [roles, setRoles] = useState(projects.map(() => "Software Developer"));
@@ -14,7 +13,6 @@ const Project = ({ projectDetails }) => {
     description: "",
   });
   const [editingIndex, setEditingIndex] = useState(null);
- 
 
   // File CSS
   const styles = {
@@ -38,6 +36,9 @@ const Project = ({ projectDetails }) => {
       verticalAlign: "middle",
       marginRight: "5px",
     },
+    list: {
+      marginTop: "5px",
+    },
     listItem: {
       marginBottom: "5px",
     },
@@ -48,7 +49,9 @@ const Project = ({ projectDetails }) => {
       marginBottom: "15px",
     },
     subheading: {
-      fontWeight: "bold",
+      fontSize: "1.2rem",
+      fontWeight: "600",
+      margin: "10px 0",
     },
     addIcon: {
       color: "#000",
@@ -89,29 +92,65 @@ const Project = ({ projectDetails }) => {
       zIndex: 999,
     },
     input: {
-      width: "90%",
-      padding: "10px",
-      marginBottom: "10px",
-      fontSize: "1rem",
+      minWidth:"22rem",
+      outline: "0",
+      background: "rgb(255, 255, 255)",
+      boxShadow: "transparent 0px 0px 0px 1px inset",
+      padding: "0.6em",
+      borderRadius: "5px",
+      border: "1px solid #333",
+      color: "black",
+    },
+    card: {
+      padding: "0 15px",
+      textAlign: "center",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      gap: "12px",
+      background: "#fff",
+      borderRadius: "20px",
+    },
+    card__title: {
+      fontSize: "23px",
+      fontWeight: "900",
+      color: "#333",
+    },
+    card__form: {
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px",
+      alignItems:"center",
+      marginTop: "10px",
+    },
+   
+    button: {
+      border: "0",
+      background: "#111",
+      color: "#fff",
+      padding: "0.68em",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      width:"40%"
     },
     textarea: {
-      width: "90%",
-      padding: "10px",
-      marginBottom: "10px",
-      fontSize: "1rem",
-      resize: "vertical",
+      minWidth:"22rem",
+      outline: "0",
+      background: "rgb(255, 255, 255)",
+      boxShadow: "transparent 0px 0px 0px 1px inset",
+      padding: "0.6em",
+      borderRadius: "5px",
+      border: "1px solid #333",
+      color: "black",
+      resize: "none",
     },
-    button: {
-      padding: "5px 10px",
-      fontSize: "1rem",
-      cursor: "pointer",
-      marginRight: "10px",
-    },
+   
     headInput: {
       display: "flex",
       alignItems: "center",
       gap: "5px",
-      margin:"0"
+      margin: "0",
     },
   };
 
@@ -177,7 +216,6 @@ const Project = ({ projectDetails }) => {
     updatedRoles[index] = event.target.value;
     setRoles(updatedRoles);
   };
-   
 
   return (
     <div style={styles.section}>
@@ -204,7 +242,7 @@ const Project = ({ projectDetails }) => {
         {projects.map((project, index) => (
           <div key={index} style={styles.projectItem}>
             <p style={styles.subheading}>{project.name}</p>
-            <p>
+            <p style={{ margin: "0" }}>
               {" "}
               <b>Technologies used : </b>
               {project.roles_and_responsibilities.tech_stack.join(", ")}
@@ -213,24 +251,24 @@ const Project = ({ projectDetails }) => {
               {" "}
               <b>Role: </b>{" "}
               <ContentEditable
-              html={roles[index]} 
-              tagName="p"
-              onChange={(e) =>
-                handleRoleChange(
-                  { target: { value: e.target.value } }, 
-                  index
-                )
-              } 
-              style={{ padding: "5px", margin: "0" }}
-            
-            /> 
+                html={roles[index]}
+                tagName="p"
+                onChange={(e) =>
+                  handleRoleChange({ target: { value: e.target.value } }, index)
+                }
+                style={{ padding: "5px", margin: "0" }}
+              />
             </p>
             <ul style={styles.list}>
               {Array.isArray(
                 project.roles_and_responsibilities.roles_and_responsibilities
               ) &&
                 project.roles_and_responsibilities.roles_and_responsibilities.map(
-                  (desc, idx) => <li style={styles.listItem} key={idx}>{desc}</li>
+                  (desc, idx) => (
+                    <li style={styles.listItem} key={idx}>
+                      {desc}
+                    </li>
+                  )
                 )}
             </ul>
             <FaEdit
@@ -259,44 +297,46 @@ const Project = ({ projectDetails }) => {
             onClick={() => setIsModalOpen(false)}
           />
           <div className="no-print" style={styles.modal}>
-            <h3>
-              {editingIndex !== null ? "Edit Project" : "Add New Project"}
-            </h3>
-            <input
-              style={styles.input}
-              value={currentProject.name}
-              onChange={(e) =>
-                setCurrentProject({ ...currentProject, name: e.target.value })
-              }
-              placeholder="Project Name"
-            />
-            <input
-              style={styles.input}
-              value={currentProject.technologies}
-              onChange={(e) =>
-                setCurrentProject({
-                  ...currentProject,
-                  technologies: e.target.value,
-                })
-              }
-              placeholder="Technologies Used (comma separated)"
-            />
-            <textarea
-              style={styles.textarea}
-              value={currentProject.description}
-              onChange={(e) =>
-                setCurrentProject({
-                  ...currentProject,
-                  description: e.target.value,
-                })
-              }
-              placeholder="Roles and Responsibilities (Enter each point in a new line)"
-              rows={6}
-            />
-            <div>
-              <button style={styles.button} onClick={handleAddOrEditProject}>
-                Save
-              </button>
+            <div style={styles.card}>
+              <span style={styles.card__title}>
+                {editingIndex !== null ? "Edit Project" : "Add New Project"}
+              </span>
+              <div style={styles.card__form}>
+              <input
+                style={styles.input}
+                value={currentProject.name}
+                onChange={(e) =>
+                  setCurrentProject({ ...currentProject, name: e.target.value })
+                }
+                placeholder="Project Name"
+              />
+              <input
+                style={styles.input}
+                value={currentProject.technologies}
+                onChange={(e) =>
+                  setCurrentProject({
+                    ...currentProject,
+                    technologies: e.target.value,
+                  })
+                }
+                placeholder="Technologies Used (comma separated)"
+              />
+              <textarea
+                style={styles.textarea}
+                value={currentProject.description}
+                onChange={(e) =>
+                  setCurrentProject({
+                    ...currentProject,
+                    description: e.target.value,
+                  })
+                }
+                placeholder="Roles and Responsibilities (Enter each point in a new line)"
+                rows={10}
+              />
+                <button style={styles.button} onClick={handleAddOrEditProject}>
+                  + Add
+                </button>
+              </div>
             </div>
           </div>
         </>

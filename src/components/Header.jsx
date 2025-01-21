@@ -15,7 +15,7 @@ import {
 } from "react-icons/fa";
 
 const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
-  console.log(rolesAndResponsibilities, "dkakddka");
+ 
   const [name, setName] = useState(candidateDetails.name);
   const [role, setRole] = useState(candidateDetails.role);
   const [about, setAbout] = useState(rolesAndResponsibilities.summary);
@@ -135,10 +135,10 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       borderRadius: "8px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
       zIndex: 1000,
-      minWidth: "300px",
+      minWidth: "275px",
     },
     card: {
-      height: "254px",
+      height: "230px",
       padding: "0 15px",
       textAlign: "center",
       display: "flex",
@@ -173,7 +173,7 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       background: "#111",
       color: "#fff",
       padding: "0.68em",
-      borderRadius: "14px",
+      borderRadius: "5px",
       fontWeight: "bold",
     },
     input: {
@@ -182,7 +182,7 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       background: "rgb(255, 255, 255)",
       boxShadow: "transparent 0px 0px 0px 1px inset",
       padding: "0.6em",
-      borderRadius: "14px",
+      borderRadius: "5px",
       border: "1px solid #333",
       color: "black",
     },
@@ -293,7 +293,7 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
         </h2>
         <div style={styles.skills}>
           {skills.map((skill, index) => (
-            <div key={index} style={styles.skillItem}>
+            <div key={index} style={styles.skillItem} className="skill-item">
               {skill}
               <FaTimes
                 className="no-print"

@@ -79,7 +79,7 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
     },
     card: {
       height: "254px",
-      padding: "0 15px",
+      padding: "0 30px",
       textAlign: "center",
       display: "flex",
       alignItems: "center",
