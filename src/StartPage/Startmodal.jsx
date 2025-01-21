@@ -61,19 +61,19 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     card: {
       backgroundColor: "#fff",
       borderRadius: "10px",
-      padding: "5px 20px",
+      padding: "0px 20px",
       width: "350px",
       display: "flex",
       flexDirection: "column",
     },
     form: {
-      marginTop: "20px",
+      marginTop: "15px",
       display: "flex",
       flexDirection: "column",
     },
     title: {
       textAlign: "center",
-      fontSize: "24px",
+      fontSize: "20px",
       fontWeight: "600",
     },
     group: {
@@ -81,7 +81,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     },
     inputarea: {
       padding: "10px",
-      marginBottom: "15px",
+      marginBottom: "10px",
       borderRadius: "5px",
       border: "1px solid rgba(0, 0, 0, 0.2)",
       outline: "none",
@@ -124,11 +124,12 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
       color: "#fff",
       border: "none",
       borderRadius: "5px",
-      padding: "10px",
-      fontSize: "16px",
+      padding: "8px",
+      fontSize: "14px",
       cursor: "pointer",
       transition: "all 0.3s ease",
       marginTop: "5px",
+      width: "50%",
     },
     buttonHover: {
       backgroundColor: "#27408b",
@@ -139,10 +140,10 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
       fontWeight: "600",
     },
     projectGrid: {
-      display: "flex", 
-      flexWrap: "wrap", 
-      gap: "5px", 
-      padding: "10px",
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "5px",
+      padding: "0px 5px",
       justifyContent: "flex-start",
     },
     project: {
@@ -389,18 +390,19 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   </div>
                 ))}
               </div>
-
-              <button
-                type="submit"
-                style={{
-                  ...styles.button,
-                  ...(isButtonHovered ? styles.buttonHover : {}),
-                }}
-                onMouseEnter={() => setIsButtonHovered(true)}
-                onMouseLeave={() => setIsButtonHovered(false)}
-              >
-                Submit
-              </button>
+              <div style={{ display: "flex", alignItems: "center", justifyContent:"center", marginTop:"5px" }}>
+                <button
+                  type="submit"
+                  style={{
+                    ...styles.button,
+                    ...(isButtonHovered ? styles.buttonHover : {}),
+                  }}
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                >
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
         </Modal>
