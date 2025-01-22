@@ -13,6 +13,8 @@ const Project = ({ projectDetails }) => {
     description: "",
   });
   const [editingIndex, setEditingIndex] = useState(null);
+ const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [isButtonHovered2, setIsButtonHovered2] = useState(false);
 
   // File CSS
   const styles = {
@@ -70,18 +72,6 @@ const Project = ({ projectDetails }) => {
       fontSize: "1rem",
       color: "#007bff",
     },
-    modal: {
-      position: "fixed",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      background: "#fff",
-      padding: "20px",
-      borderRadius: "8px",
-      boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-      zIndex: 1000,
-      minWidth: "400px",
-    },
     overlay: {
       position: "fixed",
       top: 0,
@@ -91,18 +81,26 @@ const Project = ({ projectDetails }) => {
       background: "rgba(0, 0, 0, 0.5)",
       zIndex: 999,
     },
-    input: {
-      minWidth:"22rem",
-      outline: "0",
-      background: "rgb(255, 255, 255)",
-      boxShadow: "transparent 0px 0px 0px 1px inset",
-      padding: "0.6em",
-      borderRadius: "5px",
-      border: "1px solid #333",
-      color: "black",
+    headInput: {
+      display: "flex",
+      alignItems: "center",
+      gap: "5px",
+      margin: "0",
+    },
+    modal: {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      background: "#fff",
+      padding: "20px",
+      borderRadius: "20px",
+      boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+      zIndex: 1000,
+      minWidth: "400px",
     },
     card: {
-      padding: "0 15px",
+      padding: "10px 35px",
       textAlign: "center",
       display: "flex",
       alignItems: "center",
@@ -113,7 +111,7 @@ const Project = ({ projectDetails }) => {
       borderRadius: "20px",
     },
     card__title: {
-      fontSize: "23px",
+      fontSize: "25px",
       fontWeight: "900",
       color: "#333",
     },
@@ -121,21 +119,20 @@ const Project = ({ projectDetails }) => {
       display: "flex",
       flexDirection: "column",
       gap: "10px",
-      alignItems:"center",
-      marginTop: "10px",
     },
-   
-    button: {
-      border: "0",
-      background: "#111",
-      color: "#fff",
-      padding: "0.68em",
+    input: {
+      marginTop: "10px",
+      outline: "0",
+      background: "rgb(255, 255, 255)",
+      boxShadow: "transparent 0px 0px 0px 1px inset",
+      padding: "1em",
       borderRadius: "5px",
-      fontWeight: "bold",
-      width:"40%"
+      border: "1px solid #333",
+      color: "black",
     },
     textarea: {
-      minWidth:"22rem",
+      marginTop: "10px",
+      minWidth: "45rem",
       outline: "0",
       background: "rgb(255, 255, 255)",
       boxShadow: "transparent 0px 0px 0px 1px inset",
@@ -145,12 +142,31 @@ const Project = ({ projectDetails }) => {
       color: "black",
       resize: "none",
     },
-   
-    headInput: {
-      display: "flex",
-      alignItems: "center",
-      gap: "5px",
-      margin: "0",
+    button: {
+      border: "0",
+      background: "#111",
+      color: "#fff",
+      padding: "0.68em",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      flexBasis: "50%",
+      fontSize: "15px",
+      cursor: "pointer",
+    },
+  
+    buttonHover: {
+      opacity: "0.9",
+    },
+    closeButton: {
+      position: "absolute",
+      top: "10px",
+      right: "10px",
+      background: "transparent",
+      border: "none",
+      fontSize: "35px",
+      fontWeight: "900",
+      cursor: "pointer",
+      color: "#333",
     },
   };
 
@@ -298,6 +314,12 @@ const Project = ({ projectDetails }) => {
           />
           <div className="no-print" style={styles.modal}>
             <div style={styles.card}>
+            <button
+                style={styles.closeButton}
+                onClick={() =>setIsModalOpen(false)}
+              >
+                &times;
+              </button>
               <span style={styles.card__title}>
                 {editingIndex !== null ? "Edit Project" : "Add New Project"}
               </span>
@@ -323,19 +345,57 @@ const Project = ({ projectDetails }) => {
               />
               <textarea
                 style={styles.textarea}
-                value={currentProject.description}
+                value={currentProject.description
+                  .split("\n")
+                  // .filter((line) => line.trim() !== "")
+                  .map((line) => (line.trim() ? `• ${line.trim()}` : ""))
+                  .join("\n")}
                 onChange={(e) =>
                   setCurrentProject({
                     ...currentProject,
-                    description: e.target.value,
+                    description: e.target.value
+                      .split("\n")
+                      // .filter((line) => line.trim() !== "")
+                      .map((line) => line.replace(/^•\s*/, "").trim())
+                      .join("\n"), 
                   })
                 }
                 placeholder="Roles and Responsibilities (Enter each point in a new line)"
-                rows={10}
+                rows={16}
               />
-                <button style={styles.button} onClick={handleAddOrEditProject}>
-                  + Add
-                </button>
+                 <div
+                  style={{
+                    display: "flex",
+                    gap: "50px",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    marginTop: "1rem",
+                  }}
+                >
+                  <button
+                    style={{
+                      ...styles.button,
+                      ...(isButtonHovered2 ? styles.buttonHover : {}),
+                    }}
+                    onMouseEnter={() => setIsButtonHovered2(true)}
+                    onMouseLeave={() => setIsButtonHovered2(false)}
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    style={{
+                      ...styles.button,
+                      ...(isButtonHovered ? styles.buttonHover : {}),
+                    }}
+                    onMouseEnter={() => setIsButtonHovered(true)}
+                    onMouseLeave={() => setIsButtonHovered(false)}
+                    onClick={handleAddOrEditProject}
+                  >
+                    + Add
+                  </button>
+                </div>
               </div>
             </div>
           </div>

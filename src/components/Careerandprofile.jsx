@@ -8,6 +8,8 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPoint, setCurrentPoint] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [isButtonHovered2, setIsButtonHovered2] = useState(false);
   const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
 
   const styles = {
@@ -39,6 +41,8 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
     // },
     listItem: {
       marginBottom: "10px",
+      whiteSpace: "pre-wrap",
+      wordWrap: "break-word",
     },
     actionIcons: {
       marginLeft: "10px",
@@ -63,7 +67,7 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       background: "#fff",
-      borderRadius: "8px",
+      borderRadius: "20px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
       zIndex: 1000,
       minWidth: "300px",
@@ -78,8 +82,9 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       zIndex: 999,
     },
     card: {
-      height: "254px",
-      padding: "0 30px",
+      height: "400px",
+      maxWidth: "800px",
+      padding: "0 50px",
       textAlign: "center",
       display: "flex",
       alignItems: "center",
@@ -90,7 +95,7 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       borderRadius: "20px",
     },
     card__title: {
-      fontSize: "23px",
+      fontSize: "27px",
       fontWeight: "900",
       color: "#333",
     },
@@ -98,9 +103,9 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       display: "flex",
       flexDirection: "column",
       gap: "10px",
-      alignItems:"center"
+      alignItems: "center",
     },
-   
+
     button: {
       border: "0",
       background: "#111",
@@ -108,11 +113,16 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       padding: "0.68em",
       borderRadius: "5px",
       fontWeight: "bold",
-      width:"40%"
+      flexBasis: "50%",
+      fontSize: "18px",
+      cursor: "pointer",
+    },
+    buttonHover: {
+      opacity: "0.9",
     },
     textarea: {
       marginTop: "10px",
-      minWidth:"20rem",
+      minWidth: "35rem",
       outline: "0",
       background: "rgb(255, 255, 255)",
       boxShadow: "transparent 0px 0px 0px 1px inset",
@@ -122,7 +132,17 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       color: "black",
       resize: "none",
     },
-  
+    closeButton: {
+      position: "absolute",
+      top: "10px",
+      right: "10px",
+      background: "transparent",
+      border: "none",
+      fontSize: "35px",
+      fontWeight: "900",
+      cursor: "pointer",
+      color: "#333",
+    },
   };
 
   const handleNameChange = (event) => {
@@ -211,20 +231,56 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
             />
             <div className="no-print" style={styles.modal}>
               <div style={styles.card}>
-              <span style={styles.card__title}>
+                <button
+                  style={styles.closeButton}
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  &times;
+                </button>
+                <span style={styles.card__title}>
                   {editingIndex !== null ? "Edit Point" : "Add New Point"}
                 </span>
                 <div style={styles.card__form}>
-                <textarea
-                  style={styles.textarea}
-                  value={currentPoint}
-                  onChange={(e) => setCurrentPoint(e.target.value)}
-                  placeholder="Enter career point"
-                  rows={6}
-                />
-                  <button style={styles.button} onClick={handleAddOrEditPoint}>
-                  + Add
-                  </button>
+                  <textarea
+                    style={styles.textarea}
+                    value={currentPoint}
+                    onChange={(e) => setCurrentPoint(e.target.value)}
+                    placeholder="Enter career point"
+                    rows={10}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "50px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                      marginTop: "1rem",
+                    }}
+                  >
+                    <button
+                      style={{
+                        ...styles.button,
+                        ...(isButtonHovered2 ? styles.buttonHover : {}),
+                      }}
+                      onMouseEnter={() => setIsButtonHovered2(true)}
+                      onMouseLeave={() => setIsButtonHovered2(false)}
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      style={{
+                        ...styles.button,
+                        ...(isButtonHovered ? styles.buttonHover : {}),
+                      }}
+                      onMouseEnter={() => setIsButtonHovered(true)}
+                      onMouseLeave={() => setIsButtonHovered(false)}
+                      onClick={handleAddOrEditPoint}
+                    >
+                      + Add
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

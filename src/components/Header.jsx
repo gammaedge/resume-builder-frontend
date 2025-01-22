@@ -22,6 +22,8 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
     rolesAndResponsibilities.tools_and_technologies
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isButtonHovered, setIsButtonHovered] = useState(false);
+    const [isButtonHovered2, setIsButtonHovered2] = useState(false);
   const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
 
   const handleNameChange = (event) => {
@@ -38,6 +40,10 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
   const [newSkill, setNewSkill] = useState("");
 
   const handleAddSkill = () => {
+    if (!newSkill.trim()) {
+      alert("Enter the Skill Please");
+      return;
+    }
     if (newSkill.trim() && !skills.includes(newSkill)) {
       setSkills([...skills, newSkill]);
     }
@@ -108,22 +114,6 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       verticalAlign: "middle",
       marginRight: "5px",
     },
-    // skills: {
-    //   display: "flex",
-    //   flexWrap: "wrap",
-    //   gap: "15px",
-    // },
-    // skillItem: {
-    //   backgroundColor: "#f4f4f4",
-    //   padding: "5px 10px",
-    //   borderRadius: "5px",
-    // },
-    // addSkill: {
-    //   display: "flex",
-    //   alignItems: "center",
-    //   marginTop: "15px",
-    //   gap: "10px",
-    // },
     addIcon: {
       color: "#000",
       padding: "10px",
@@ -141,23 +131,25 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       background: "#fff",
-      borderRadius: "8px",
+      borderRadius: "20px",
       boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
       zIndex: 1000,
       minWidth: "275px",
     },
     card: {
-      height: "230px",
-      padding: "0 15px",
+      height: "250px",
+      width: "300px",
+      padding: "0 35px",
       textAlign: "center",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       flexDirection: "column",
-      gap: "12px",
+      gap: "15px",
       background: "#fff",
       borderRadius: "20px",
     },
+
     card__title: {
       fontSize: "23px",
       fontWeight: "900",
@@ -166,7 +158,7 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
     card__form: {
       display: "flex",
       flexDirection: "column",
-      gap: "10px",
+      gap: "25px",
     },
     overlay: {
       position: "fixed",
@@ -178,10 +170,10 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       zIndex: 999,
     },
     list: {
-      fontSize:"14px",
+      fontSize: "14px",
       display: "grid",
       gridTemplateColumns: "repeat(4, 1fr)",
-      gap: "10px",
+      gap: "25px",
       padding: "0 1rem",
       margin: 0,
       listStyleType: "disc",
@@ -196,13 +188,20 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       padding: "0.68em",
       borderRadius: "5px",
       fontWeight: "bold",
+      flexBasis: "50%",
+      fontSize: "15px",
+      cursor: "pointer",
+    },
+    buttonHover: {
+      opacity: "0.9",
     },
     input: {
       marginTop: "10px",
       outline: "0",
       background: "rgb(255, 255, 255)",
       boxShadow: "transparent 0px 0px 0px 1px inset",
-      padding: "0.6em",
+      padding: "0.9em 0.6em",
+      minWidth: "280px",
       borderRadius: "5px",
       border: "1px solid #333",
       color: "black",
@@ -211,6 +210,17 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       color: "#000",
       cursor: "pointer",
       fontSize: "14px",
+    },
+    closeButton: {
+      position: "absolute",
+      top: "10px",
+      right: "10px",
+      background: "transparent",
+      border: "none",
+      fontSize: "25px",
+      fontWeight: "900",
+      cursor: "pointer",
+      color: "#333",
     },
   };
 
@@ -343,6 +353,12 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
             <div style={styles.overlay} onClick={() => setIsModalOpen(false)} />
             <div style={styles.modal}>
               <div style={styles.card}>
+                <button
+                  style={styles.closeButton}
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  &times;
+                </button>
                 <span style={styles.card__title}>Add New Skill</span>
                 <div style={styles.card__form}>
                   <input
@@ -352,9 +368,30 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
                     onChange={(e) => setNewSkill(e.target.value)}
                     placeholder="Enter skill name"
                   />
-                  <button style={styles.button} onClick={handleAddSkill}>
-                    + Add
-                  </button>
+                  <div style={{ display: "flex", gap: "10px" }}>
+                    <button
+                     style={{
+                      ...styles.button,
+                      ...(isButtonHovered2 ? styles.buttonHover : {}),
+                    }}
+                    onMouseEnter={() => setIsButtonHovered2(true)}
+                    onMouseLeave={() => setIsButtonHovered2(false)}
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      style={{
+                        ...styles.button,
+                        ...(isButtonHovered ? styles.buttonHover : {}),
+                      }}
+                      onMouseEnter={() => setIsButtonHovered(true)}
+                      onMouseLeave={() => setIsButtonHovered(false)}
+                      onClick={handleAddSkill}
+                    >
+                      + Add
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
