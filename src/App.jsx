@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EducationAndOther from "./components/EducationAndOther";
 import Header from "./components/Header";
 import Project from "./components/Projects";
@@ -13,7 +13,6 @@ import { ClipLoader } from "react-spinners";
 
 function App() {
   const ref = useRef();
-
   const [rolesAndResponsibilities, setRolesAndResponsibilities] = useState({
     summary: "",
     tools_and_technologies: [],
@@ -38,6 +37,15 @@ function App() {
     hobby: false,
     experiance: false,
   });
+  
+  useEffect(() => {
+    const { name, role } = candidateDetails;
+    if (name && role) {
+      document.title = `${name}_${role}_Resume`;
+    } else {
+      document.title = "Resume_Builder";
+    }
+  }, [candidateDetails]);
 
   const fetchProjects = async (jd, experience, selectedProjects) => {
     try {
@@ -109,6 +117,7 @@ function App() {
     } else {
       alert("Please fill out all fields before submitting.");
     }
+
   };
 
   return (
