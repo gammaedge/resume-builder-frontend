@@ -5,8 +5,8 @@ import { FaBriefcase, FaPlus, FaEdit, FaTimes } from "react-icons/fa";
 const Workexperience = () => {
   const [workExperiences, setWorkExperiences] = useState([
     {
-      company: "Senior Software Engineer, CubeXo Software Solutions",
-      experience: "Oct 2018 – Present | Indore",
+      company: "Designation, Company name",
+      experience: "Time Period | Location",
       workPoints: [
         "Evaluated new tools, technologies, and design patterns by creating POCs to come up with trustable solutions for the clients which led to 60% more client conversions.",
         "Communicated and collaborated with multi-disciplinary teams of engineers, clients, and stakeholders daily.",
