@@ -14,6 +14,8 @@ import ButtonContainer from "./components/ButtonContainer";
 
 function App() {
   const ref = useRef();
+  const experienceRef = useRef();
+  const educationRef = useRef();
   const [rolesAndResponsibilities, setRolesAndResponsibilities] = useState({
     summary: "",
     tools_and_technologies: [],
@@ -103,6 +105,11 @@ function App() {
       hobby: false,
       experiance: experience,
     });
+    if (experience && experienceRef.current) {
+      experienceRef.current.scrollIntoView({ behavior: "smooth" });
+    } else if (education && educationRef.current) {
+      educationRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleModalSubmit = (
@@ -153,7 +160,7 @@ function App() {
                 />
               </div>
               {eduhobby.experiance && (
-                <div className="section page-break">
+                <div className="section page-break"   ref={experienceRef}>
                   <Workexperience />
                 </div>
               )}
@@ -163,10 +170,11 @@ function App() {
               </div>
 
               {eduhobby.edu && (
-                <div className="section page-break">
+                <div className="section page-break"  ref={educationRef}>
                   <EducationAndOther includeInterests={eduhobby.hobby} />
                 </div>
               )}
+              
             </>
           )
         )}
