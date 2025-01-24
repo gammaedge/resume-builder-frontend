@@ -19,7 +19,7 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       // pageBreakBefore: "always"
     },
     sectionTitle: {
-      fontSize: "1.2rem",
+      fontSize: "18px",
       fontWeight: "bold",
       borderBottom: "2px solid #ccc",
       paddingBottom: "5px",
@@ -29,16 +29,16 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
       gap: "10px",
     },
     headInput: {
-      padding: "5px",
+      paddingTop: "5px",
     },
     icon: {
       fontSize: "0.9rem",
       verticalAlign: "middle",
       marginRight: "5px",
     },
-    // list: {
-    //   marginLeft: "20px",
-    // },
+    list: {
+      fontSize :"14px",
+    },
     listItem: {
       marginBottom: "10px",
       whiteSpace: "pre-wrap",
@@ -52,7 +52,6 @@ const Careerandprofile = ({ rolesAndResponsibilities }) => {
     },
     addIcon: {
       color: "#000",
-      padding: "10px",
       borderRadius: "50%",
       cursor: "pointer",
       display: "flex",

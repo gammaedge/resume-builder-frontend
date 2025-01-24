@@ -104,7 +104,7 @@ const Workexperience = () => {
       padding: "0 20px",
     },
     sectionTitle: {
-      fontSize: "1.2rem",
+      fontSize: "18px",
       fontWeight: "bold",
       borderBottom: "2px solid #ccc",
       paddingBottom: "5px",
@@ -118,7 +118,6 @@ const Workexperience = () => {
     },
     addIcon: {
       color: "#000",
-      padding: "10px",
       borderRadius: "50%",
       cursor: "pointer",
       display: "flex",
@@ -173,6 +172,12 @@ const Workexperience = () => {
       flexDirection: "column",
       gap: "10px",
     },
+    icon:{
+      fontSize: "0.9rem",
+      verticalAlign: "middle",
+      marginRight: "5px",
+      paddingBottom :"5px"
+    },
     input: {
       marginTop: "10px",
       outline: "0",
@@ -225,7 +230,7 @@ const Workexperience = () => {
   return (
     <div style={styles.section}>
       <h2 style={styles.sectionTitle}>
-        <FaBriefcase /> Work Experience
+        <FaBriefcase style={styles.icon}/> Work Experience
         <FaPlus
           className="no-print"
           style={styles.addIcon}
@@ -246,7 +251,7 @@ const Workexperience = () => {
               <ContentEditable
                 html={workExperience.company}
                 onChange={(e) => handleEditCompany(e, workExperienceIndex)}
-                style={{ padding: "5px" }}
+                style={{ padding: "5px", fontSize:"16px"}}
               />
             </h3>
             <FaTimes
@@ -259,12 +264,12 @@ const Workexperience = () => {
             <ContentEditable
               html={workExperience.experience}
               onChange={(e) => handleEditExperience(e, workExperienceIndex)}
-              style={{ padding: "5px" }}
+              style={{ padding: "5px",fontSize:"16px" }}
             />
           </p>
           <ul>
             {workExperience.workPoints.map((point, index) => (
-              <div key={index} style={{ display: "flex" }}>
+              <div key={index} style={{ display: "flex",fontSize:"14px"   }}>
                 <li style={styles.listItem}>
                   <span>{point}</span>
                 </li>

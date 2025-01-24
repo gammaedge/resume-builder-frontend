@@ -10,6 +10,7 @@ import { useRef } from "react";
 import Careerandprofile from "./components/Careerandprofile";
 import Startmodal from "./StartPage/Startmodal";
 import { ClipLoader } from "react-spinners";
+import ButtonContainer from "./components/ButtonContainer";
 
 function App() {
   const ref = useRef();
@@ -96,6 +97,13 @@ function App() {
   //   };
   //   html2pdf().from(element).set(options).save();
   // };
+  const handleStateChange = ({ experience, education }) => {
+    setEduhobby({
+      edu: education,
+      hobby: false,
+      experiance: experience,
+    });
+  };
 
   const handleModalSubmit = (
     candidatename,
@@ -170,6 +178,11 @@ function App() {
           </button>
         </div>
       )} */}
+      {!isModalOpen && (
+        <div className="btndownContainer no-print">
+          <ButtonContainer onStateChange={handleStateChange} />
+        </div>
+      )}
       <Startmodal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

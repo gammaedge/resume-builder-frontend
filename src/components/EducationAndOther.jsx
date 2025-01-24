@@ -3,10 +3,10 @@ import { FaGraduationCap, FaBook } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
 const EducationAndOther = (props) => {
   const [clgname, setClgname] = useState(
-    " Bachelor of Computer Science and Engineering, MIT Mandsaur"
+    "Your Degree Name, College Name"
   );
   const [clgyear, setClgyear] = useState(
-    "2015 – 2019 | Mandsaur, MP"
+    "Time period | Place"
   );
   const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
   const handleNameChange = (event) => {
@@ -23,7 +23,7 @@ const EducationAndOther = (props) => {
       //   pageBreakBefore: "always"
     },
     sectionTitle: {
-      fontSize: "1.2rem",
+      fontSize: "18px",
       fontWeight: "bold",
       borderBottom: "2px solid #ccc",
       paddingBottom: "5px",
@@ -36,6 +36,7 @@ const EducationAndOther = (props) => {
       fontSize: "0.9rem",
       verticalAlign: "middle",
       marginRight: "5px",
+      paddingBottom : "5px"
     },
     educationContent: {
       display: "flex",
@@ -89,7 +90,7 @@ const EducationAndOther = (props) => {
           <h2 style={styles.sectionTitle}>
             <FaBook style={styles.icon} /> Interests
           </h2>
-          <p>Cycling | Reading | Automating Stuff with Code</p>
+          <p style={{fontSize : "14px"}}>Cycling | Reading | Automating Stuff with Code</p>
         </div>
       )}
     </>

@@ -68,12 +68,12 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
     },
     h1: {
       margin: "0",
-      fontSize: "28px",
+      fontSize: "24px",
       textAlign: "center",
     },
     p: {
       margin: "5px 0",
-      fontSize: "15px",
+      fontSize: "14px",
       color: "#555",
     },
     contact: {
@@ -100,7 +100,7 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       // pageBreakBefore: "always"
     },
     sectionTitle: {
-      fontSize: "1.2rem",
+      fontSize: "18px",
       fontWeight: "bold",
       borderBottom: "2px solid #ccc",
       paddingBottom: "5px",
@@ -113,10 +113,10 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       fontSize: "0.9rem",
       verticalAlign: "middle",
       marginRight: "5px",
+      paddingBottom :"5px"
     },
     addIcon: {
       color: "#000",
-      padding: "10px",
       borderRadius: "50%",
       cursor: "pointer",
       display: "flex",
@@ -173,7 +173,7 @@ const Header = ({ candidateDetails, rolesAndResponsibilities }) => {
       fontSize: "14px",
       display: "grid",
       gridTemplateColumns: "repeat(4, 1fr)",
-      gap: "25px",
+      // gap: "25px",
       padding: "0 1rem",
       margin: 0,
       listStyleType: "disc",

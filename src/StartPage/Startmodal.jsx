@@ -312,7 +312,7 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   required
                 /> */}
                       <div>
-                        <label>
+                        <label style={styles.checks} >
                           <input
                             type="checkbox"
                             checked={includeInterests}
@@ -390,7 +390,14 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   </div>
                 ))}
               </div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent:"center", marginTop:"5px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "5px",
+                }}
+              >
                 <button
                   type="submit"
                   style={{

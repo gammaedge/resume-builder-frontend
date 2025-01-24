@@ -24,7 +24,7 @@ const Project = ({ projectDetails }) => {
       // pageBreakBefore: "always"
     },
     sectionTitle: {
-      fontSize: "1.2rem",
+      fontSize: "18px",
       fontWeight: "bold",
       borderBottom: "2px solid #ccc",
       paddingBottom: "5px",
@@ -37,9 +37,11 @@ const Project = ({ projectDetails }) => {
       fontSize: "0.9rem",
       verticalAlign: "middle",
       marginRight: "5px",
+      paddingBottom:"5px"
     },
     list: {
       marginTop: "5px",
+      fontSize:"14px"
     },
     listItem: {
       marginBottom: "5px",
@@ -51,13 +53,12 @@ const Project = ({ projectDetails }) => {
       marginBottom: "15px",
     },
     subheading: {
-      fontSize: "1.2rem",
+      fontSize: "16px",
       fontWeight: "600",
       margin: "10px 0",
     },
     addIcon: {
       color: "#000",
-      padding: "10px",
       borderRadius: "50%",
       cursor: "pointer",
       display: "flex",
@@ -86,6 +87,7 @@ const Project = ({ projectDetails }) => {
       alignItems: "center",
       gap: "5px",
       margin: "0",
+      fontSize :"14px" 
     },
     modal: {
       position: "fixed",
@@ -258,7 +260,7 @@ const Project = ({ projectDetails }) => {
         {projects.map((project, index) => (
           <div key={index} style={styles.projectItem}>
             <p style={styles.subheading}>{project.name}</p>
-            <p style={{ margin: "0" }}>
+            <p style={{ margin: "0",fontSize :"14px" }}>
               {" "}
               <b>Technologies used : </b>
               {project.roles_and_responsibilities.tech_stack.join(", ")}
@@ -272,7 +274,7 @@ const Project = ({ projectDetails }) => {
                 onChange={(e) =>
                   handleRoleChange({ target: { value: e.target.value } }, index)
                 }
-                style={{ padding: "5px", margin: "0" }}
+                style={{ padding: "5px", margin: "0", fontSize :"14px" }}
               />
             </p>
             <ul style={styles.list}>
