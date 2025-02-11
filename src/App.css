@@ -40,6 +40,16 @@
 .btndown svg {
   margin-right: 8px; 
 }
+.save-btn{
+  background-color: #0556b3;
+  margin-top: 10px;
+  color: white;
+  padding: 10px 8px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px, rgba(0, 73, 144, 0.5) 5px 10px 15px;
+  cursor: pointer;
+  }
 
 @media print {
   .no-print {

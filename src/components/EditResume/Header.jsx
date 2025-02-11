@@ -1,25 +1,18 @@
 import React, { useState } from "react";
 import ContentEditable from "react-contenteditable";
 import {
-  // FaMapMarkerAlt,
-  // FaEnvelope,
-  // FaPhone,
-  // FaGlobe,
-  // FaTwitter,
-  // FaLinkedin,
-  // FaGithub,
   FaUser,
   FaTools,
   FaPlus,
   FaTimes,
 } from "react-icons/fa";
 
-const Header = ({ candidateDetails, rolesAndResponsibilities,onCandidateUpdate,onRoleUpdate }) => {
-  const [name, setName] = useState(candidateDetails.name);
-  const [role, setRole] = useState(candidateDetails.role);
-  const [about, setAbout] = useState(rolesAndResponsibilities.summary);
+const Header = ({ candidateDetails, rolesAndResponsibilities,onCandidateUpdate,onRoleUpdate,resume }) => {
+  const [name, setName] = useState(resume.candidateDetails.name);
+  const [role, setRole] = useState(resume.candidateDetails.role);
+  const [about, setAbout] = useState(resume.rolesAndResponsibilities.summary);
   const [skills, setSkills] = useState(
-    rolesAndResponsibilities.tools_and_technologies
+    resume.rolesAndResponsibilities.tools_and_technologies
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
     const [isButtonHovered, setIsButtonHovered] = useState(false);
@@ -27,24 +20,21 @@ const Header = ({ candidateDetails, rolesAndResponsibilities,onCandidateUpdate,o
   const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
 
   const handleNameChange = (event) => {
-    // setName(sanitizeInput(event.target.value));
     const updatedName = sanitizeInput(event.target.value);
     setName(updatedName);
-    onCandidateUpdate({ ...candidateDetails, name: updatedName });
+    onCandidateUpdate({ ...resume.candidateDetails, name: updatedName });
   };
 
   const handleRoleChange = (event) => {
-    // setRole(sanitizeInput(event.target.value));
     const updatedRole = event.target.value;
     setRole(updatedRole);
-    onCandidateUpdate({ ...candidateDetails, role: updatedRole });
+    onCandidateUpdate({ ...resume.candidateDetails, role: updatedRole });
   };
   const handleAboutChange = (event) => {
-    // setAbout(sanitizeInput(event.target.value));
     const updatedAbout = sanitizeInput(event.target.value);
   setAbout(updatedAbout);
   onRoleUpdate({
-    ...rolesAndResponsibilities,   
+    ...resume.rolesAndResponsibilities,   
     summary: updatedAbout,       
   });
   };
@@ -57,10 +47,9 @@ const Header = ({ candidateDetails, rolesAndResponsibilities,onCandidateUpdate,o
       return;
     }
     if (newSkill.trim() && !skills.includes(newSkill)) {
-      // setSkills([...skills, newSkill]);
       const updatedSkills = [...skills, newSkill];
       setSkills(updatedSkills);
-      onRoleUpdate({ ...rolesAndResponsibilities, tools_and_technologies: updatedSkills });
+      onRoleUpdate({ ...resume.rolesAndResponsibilities, tools_and_technologies: updatedSkills });
     }
     setNewSkill("");
     setIsModalOpen(false);
@@ -69,12 +58,12 @@ const Header = ({ candidateDetails, rolesAndResponsibilities,onCandidateUpdate,o
     const updatedSkills = [...skills];
     updatedSkills[index] = event.target.value;
     setSkills(updatedSkills);
-    onRoleUpdate({ ...rolesAndResponsibilities, tools_and_technologies: updatedSkills });
+    onRoleUpdate({ ...resume.rolesAndResponsibilities, tools_and_technologies: updatedSkills });
   };
   const handleRemoveSkill = (index) => {
     const updatedSkills = skills.filter((_, i) => i !== index);
     setSkills(updatedSkills);
-    onRoleUpdate({ ...rolesAndResponsibilities, tools_and_technologies: updatedSkills });
+    onRoleUpdate({ ...resume.rolesAndResponsibilities, tools_and_technologies: updatedSkills });
   };
 
   const styles = {

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
-import { ClipLoader } from "react-spinners";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import { useNavigate } from "react-router-dom";
+
+
 
 Modal.setAppElement("#root");
 
-const Startmodal = ({ isOpen, onClose, onSubmit }) => {
+const Startmodal = ({ isOpen, onSubmit}) => {
   const [projectList, setProjectList] = useState([]);
   const [candidatename, setCandidatename] = useState("");
   const [designation, setDesignation] = useState("");
@@ -12,14 +16,19 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
   const [experience, setExperience] = useState("");
   const [selectedProjects, setSelectedProjects] = useState([]);
   const [includeEducation, setIncludeEducation] = useState(false);
-  //   const [educationDetails, setEducationDetails] = useState({});
   const [includeInterests, setIncludeInterests] = useState(false);
   const [includeExperiance, setIncludeExperiance] = useState(false);
-  //   const [interestDetails, setInterestDetails] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [focusedField, setFocusedField] = useState("");
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      navigate("/"); // Redirect to AuthPage if not logged in
+    }
+  }, [navigate]);
+  
   const handleFocus = (field) => {
     setFocusedField(field);
   };
@@ -39,7 +48,35 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     }
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const styles = {
+    createbutton: {
+      position: "fixed", 
+      top: "20px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      backgroundColor:'#074799',
+      borderradius: "7px",
+      border: "2px solid transparent",
+      textshadow: "1px 1px 1px #00000040",
+      boxshadow: "8px 8px 20px 0px #45090059",
+      padding: "10px 40px",
+      lineheight: "20px",
+      cursor: "pointer",
+      transition: "all 0.3s",
+      color: "white",
+      fontsize: "20px",
+      fontweight: "800",
+    },
     loader: {
       display: "flex",
       justifyContent: "center",
@@ -175,7 +212,6 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
     }
   };
 
@@ -185,36 +221,34 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    onSubmit(candidatename, designation, jd, experience, selectedProjects, {
-      includeEducation,
-      //   educationDetails,
-      includeInterests,
-      includeExperiance,
-      //   interestDetails,
-    });
+  onSubmit(candidatename, designation, jd, experience, selectedProjects, {
+    includeEducation,
+    includeInterests,
+    includeExperiance,
+  });
+  handleClose(); 
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated"); // Clear authentication flag
+    navigate("/"); // Redirect to login page
   };
 
   return (
-    <>
-      {loading ? (
-        <div style={styles.loader}>
-          <ClipLoader color="#20ddc0" size={50} />
-        </div>
-      ) : (
-        <Modal
-          isOpen={isOpen}
-          onRequestClose={onClose}
-          shouldCloseOnOverlayClick={false}
-          contentLabel="Project Form"
-          style={{
-            content: styles.content,
-            overlay: {
-              background: "#fff",
-            },
-          }}
-        >
-          <div style={styles.card}>
-            <span style={styles.title}>Enter Resume Details</span>
+    <div>
+    <React.Fragment>
+    {(isOpen) && <button style={styles.createbutton} onClick={handleClickOpen}>Create Resume</button>}
+
+    <Dialog
+      open={open}
+      onClose={handleClose} 
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      maxWidth="sm"
+    > 
+  <DialogContent>
+  <div style={styles.card}>
+           <span style={styles.title}>Enter Resume Details</span>
             <form style={styles.form} onSubmit={handleFormSubmit}>
               <div style={styles.group}>
                 <input
@@ -406,15 +440,30 @@ const Startmodal = ({ isOpen, onClose, onSubmit }) => {
                   }}
                   onMouseEnter={() => setIsButtonHovered(true)}
                   onMouseLeave={() => setIsButtonHovered(false)}
+                  onClick={handleClose}
                 >
                   Submit
                 </button>
               </div>
             </form>
           </div>
-        </Modal>
-      )}
-    </>
+  </DialogContent>
+</Dialog>
+  </React.Fragment>
+  <button onClick={handleLogout} style={{ 
+      position: "fixed", 
+      top: "20px", 
+      right: "20px", 
+      backgroundColor: "#ff4d4d", 
+      color: "white", 
+      padding: "10px 20px", 
+      borderRadius: "5px", 
+      border: "none", 
+      cursor: "pointer" 
+    }}>
+      Logout
+    </button>
+  </div>
   );
 };
 

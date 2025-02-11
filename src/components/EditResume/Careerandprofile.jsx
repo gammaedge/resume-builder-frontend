@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { FaRegListAlt, FaPlus, FaTimes, FaEdit } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
 
-const Careerandprofile = ({ rolesAndResponsibilities ,onRoleUpdate}) => {
+const Careerandprofile = ({ rolesAndResponsibilities ,onRoleUpdate,resume}) => {
   const [name, setName] = useState("Career Summary");
-  const [careerPoints, setCareerPoints] = useState(rolesAndResponsibilities);
+  const [careerPoints, setCareerPoints] = useState(resume.rolesAndResponsibilities.bullet_points);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPoint, setCurrentPoint] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
@@ -16,7 +16,6 @@ const Careerandprofile = ({ rolesAndResponsibilities ,onRoleUpdate}) => {
     section: {
       margin: "20px 0",
       padding: "0 20px",
-      // pageBreakBefore: "always"
     },
     sectionTitle: {
       fontSize: "18px",
@@ -157,12 +156,9 @@ const Careerandprofile = ({ rolesAndResponsibilities ,onRoleUpdate}) => {
 
     let updatedPoints;
     if (editingIndex !== null) {
-      // const updatedPoints = [...careerPoints];
       updatedPoints = [...careerPoints];
       updatedPoints[editingIndex] = currentPoint;
-      // setCareerPoints(updatedPoints);
     } else {
-      // setCareerPoints([...careerPoints, currentPoint]);
       updatedPoints = [...careerPoints, currentPoint]; 
     }
 

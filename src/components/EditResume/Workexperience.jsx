@@ -2,7 +2,7 @@ import React, { useState} from "react";
 import ContentEditable from "react-contenteditable";
 import { FaBriefcase, FaPlus, FaEdit, FaTimes } from "react-icons/fa";
 
-const Workexperience = ({ onWorkExperiencesUpdate }) => {
+const Workexperience = ({ onWorkExperiencesUpdate,resume }) => {
   const [workExperiences, setWorkExperiences] = useState([
     {
       company: "Designation, Company name",
@@ -41,7 +41,7 @@ const Workexperience = ({ onWorkExperiencesUpdate }) => {
     }
 
     setWorkExperiences([
-      ...workExperiences,
+      ...resume.workExperiences,
       {
         company: trimmedCompany,
         experience: trimmedExperience,
@@ -68,7 +68,7 @@ const Workexperience = ({ onWorkExperiencesUpdate }) => {
       return;
     }
 
-    const updatedWorkExperiences = [...workExperiences];
+    const updatedWorkExperiences = [...resume.workExperiences];
     const { index, workExperienceIndex } = editingIndex;
     updatedWorkExperiences[workExperienceIndex].workPoints[index] =
       trimmedPoint;
@@ -87,13 +87,13 @@ const Workexperience = ({ onWorkExperiencesUpdate }) => {
   };
 
   const handleEditCompany = (event, index) => {
-    const updatedWorkExperiences = [...workExperiences];
+    const updatedWorkExperiences = [...resume.workExperiences];
     updatedWorkExperiences[index].company = event.target.value;
     setWorkExperiences(updatedWorkExperiences);
   };
 
   const handleEditExperience = (event, index) => {
-    const updatedWorkExperiences = [...workExperiences];
+    const updatedWorkExperiences = [...resume.workExperiences];
     updatedWorkExperiences[index].experience = event.target.value;
     setWorkExperiences(updatedWorkExperiences);
   };
@@ -244,7 +244,7 @@ const Workexperience = ({ onWorkExperiencesUpdate }) => {
         />
       </h2>
 
-      {workExperiences.map((workExperience, workExperienceIndex) => (
+      {resume.workExperiences.map((workExperience, workExperienceIndex) => (
         <div key={workExperienceIndex}>
           <div
             style={{
@@ -288,7 +288,7 @@ const Workexperience = ({ onWorkExperiencesUpdate }) => {
                   className="no-print"
                   style={{ ...styles.actionIcons, color: "#ff4d4d" }}
                   onClick={() => {
-                    const updatedExperiences = [...workExperiences];
+                    const updatedExperiences = [...resume.workExperiences];
                     updatedExperiences[workExperienceIndex].workPoints.splice(
                       index,
                       1

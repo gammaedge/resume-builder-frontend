@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FaLaptopCode, FaPlus, FaEdit, FaTimes } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
 
-const Project = ({ projectDetails ,onProjectUpdate }) => {
-  const [projects, setProjects] = useState(projectDetails);
+const Project = ({ projectDetails ,onProjectUpdate ,resume}) => {
+  const [projects, setProjects] = useState(resume.projectDetails);
   const [roles, setRoles] = useState(projects.map(() => "Software Developer"));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState({

@@ -1,19 +1,21 @@
 import React,{useState,useEffect} from "react";
-import { FaGraduationCap, FaBook } from "react-icons/fa";
+import { FaGraduationCap } from "react-icons/fa";
 import ContentEditable from "react-contenteditable";
 const EducationAndOther = (props) => {
+  const { resume } = props;
+
   const [clgname, setClgname] = useState(
-    "Your Degree Name, College Name"
+    resume?.educationData?.clgname || "Your Degree Name, College Name"
   );
   const [clgyear, setClgyear] = useState(
-    "Time period | Place"
+    resume?.educationData?.clgyear || "Time period | Place"
   );
   const sanitizeInput = (input) => input.replace(/<\/?[^>]+(>|$)/g, "");
   const handleNameChange = (event) => {
     setClgname(sanitizeInput(event.target.value));
   };
   const handleYearChange = (event) => {
-    setClgyear(sanitizeInput(event.target.value));
+    setClgyear(sanitizeInput(event.target.value));  
   };
 
   useEffect(() => {
@@ -62,6 +64,7 @@ const EducationAndOther = (props) => {
       fontSize: "0.9rem",
     },
   };
+
   
   return (
     <>
@@ -91,14 +94,14 @@ const EducationAndOther = (props) => {
       </div>
 
       {/* Interests Section */}
-      {props.includeInterests && (
+      {/* {props.includeInterests && (
         <div style={styles.section}>
           <h2 style={styles.sectionTitle}>
             <FaBook style={styles.icon} /> Interests
           </h2>
           <p style={{fontSize : "14px"}}>Cycling | Reading | Automating Stuff with Code</p>
         </div>
-      )}
+      )} */}
     </>
   );
 };
