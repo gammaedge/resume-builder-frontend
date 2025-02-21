@@ -11,6 +11,7 @@ Modal.setAppElement("#root");
 const Startmodal = ({ isOpen, onSubmit}) => {
   const [projectList, setProjectList] = useState([]);
   const [candidatename, setCandidatename] = useState("");
+  const [realCandidatename, setRealCandidatename] = useState("");
   const [designation, setDesignation] = useState("");
   const [jd, setJd] = useState("");
   const [experience, setExperience] = useState("");
@@ -22,12 +23,12 @@ const Startmodal = ({ isOpen, onSubmit}) => {
   const [focusedField, setFocusedField] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (!isAuthenticated) {
-      navigate("/"); // Redirect to AuthPage if not logged in
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const isAuthenticated = localStorage.getItem("isAuthenticated");
+  //   if (!isAuthenticated) {
+  //     navigate("/"); 
+  //   }
+  // }, [navigate]);
   
   const handleFocus = (field) => {
     setFocusedField(field);
@@ -182,6 +183,7 @@ const Startmodal = ({ isOpen, onSubmit}) => {
       gap: "5px",
       padding: "0px 5px",
       justifyContent: "flex-start",
+      marginBottom:"10px"
     },
     project: {
       fontSize: "13px",
@@ -200,6 +202,10 @@ const Startmodal = ({ isOpen, onSubmit}) => {
       justifyContent: "space-between",
       marginBottom: "10px",
     },
+    candidateinput:{
+      marginTop:'50px',
+      backgroundColor:'pink'
+    }
   };
 
   const fetchProjectlist = async () => {
@@ -221,7 +227,7 @@ const Startmodal = ({ isOpen, onSubmit}) => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-  onSubmit(candidatename, designation, jd, experience, selectedProjects, {
+  onSubmit(candidatename, designation, jd, experience, selectedProjects, realCandidatename, {
     includeEducation,
     includeInterests,
     includeExperiance,
@@ -230,8 +236,8 @@ const Startmodal = ({ isOpen, onSubmit}) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated"); // Clear authentication flag
-    navigate("/"); // Redirect to login page
+    localStorage.removeItem("isAuthenticated"); 
+    navigate("/"); 
   };
 
   return (
@@ -424,6 +430,33 @@ const Startmodal = ({ isOpen, onSubmit}) => {
                   </div>
                 ))}
               </div>
+              <div style={styles.group}>
+                <input
+                  style={{
+                    ...styles.inputarea,
+                    ...(focusedField === "realCandidatename" || realCandidatename
+                      ? styles.inputareaFocus
+                      : {}),
+                  }}
+                  className="candidate-input"
+                  value={realCandidatename}
+                  type="text"
+                  onChange={(e) => setRealCandidatename(e.target.value)}
+                  onFocus={() => handleFocus("realCandidatename")}
+                  onBlur={() => handleBlur("realCandidatename")}
+                />
+                <label
+                  style={{
+                    ...styles.label,
+                    ...(focusedField === "realCandidatename" || realCandidatename
+                      ? styles.labelFloating
+                      : {}),
+                  }}
+                >
+                  Remark
+                </label>
+              </div>
+
               <div
                 style={{
                   display: "flex",
@@ -450,19 +483,24 @@ const Startmodal = ({ isOpen, onSubmit}) => {
   </DialogContent>
 </Dialog>
   </React.Fragment>
-  <button onClick={handleLogout} style={{ 
-      position: "fixed", 
-      top: "20px", 
-      right: "20px", 
-      backgroundColor: "#ff4d4d", 
-      color: "white", 
-      padding: "10px 20px", 
-      borderRadius: "5px", 
-      border: "none", 
-      cursor: "pointer" 
-    }}>
-      Logout
-    </button>
+  {isOpen && (
+        <button
+          onClick={handleLogout}
+          style={{
+            position: "fixed",
+            top: "20px",
+            right: "20px",
+            backgroundColor: "#ff4d4d",
+            color: "white",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Logout
+        </button>
+      )}
   </div>
   );
 };

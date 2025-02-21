@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect, useState ,useCallback} from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import EducationAndOther from "./components/EducationAndOther";
 import Header from "./components/Header";
 import Project from "./components/Projects";
@@ -13,10 +13,19 @@ import { ClipLoader } from "react-spinners";
 import ButtonContainer from "./components/ButtonContainer";
 // import { saveAs } from "file-saver";
 import ResumeTable from "./components/ResumeTable";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
 import AuthPage from "./StartPage/AuthPage";
+import { useNavigate } from "react-router-dom";
 
-function App() {
+import { Navigate, Outlet } from "react-router-dom";
+
+const ProtectedRoute = () => {
+  const token = localStorage.getItem("token");
+  return token ? <Outlet /> : <Navigate to="/auth" />;
+};
+
+function App({ onClose }) {
+  const navigate = useNavigate();
   const ref = useRef();
   const experienceRef = useRef();
   const educationRef = useRef();
@@ -37,6 +46,7 @@ function App() {
     name: "",
     role: "",
   });
+  const [realcandidatename, setRealCandidatename] = useState("");
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [eduhobby, setEduhobby] = useState({
@@ -47,7 +57,7 @@ function App() {
   const [workExperiences, setWorkExperiences] = useState([]);
   const [educationData, setEducationData] = useState({
     clgname: "",
-    clgyear: "",  
+    clgyear: "",
   });
 
   useEffect(() => {
@@ -127,10 +137,11 @@ function App() {
     jd,
     experience,
     selectedProjects,
+    realcandidatename,
     { includeEducation, includeInterests, includeExperiance }
   ) => {
     if (jd && experience && selectedProjects.length > 0) {
-      setIsModalOpen(false);                          
+      setIsModalOpen(false);
       fetchProjects(jd, experience, selectedProjects);
       setEduhobby({
         edu: includeEducation,
@@ -138,14 +149,13 @@ function App() {
         experiance: includeExperiance,
       });
       setCandidateDetails({ name: candidatename, role: designation });
+      setRealCandidatename(realcandidatename);
     } else {
       alert("Please fill out all fields before submitting.");
     }
-
   };
 
   const saveResume = async () => {
-    // Prepare the updated resume data
     const updatedResumeData = {
       candidateDetails,
       rolesAndResponsibilities,
@@ -153,13 +163,13 @@ function App() {
       eduhobby,
       workExperiences,
       educationData,
-      parentId: 'null',
+      realcandidatename,
+      parentId: "null",
     };
-  
+
     console.log("Saving updated resume data:", updatedResumeData);
-  
+
     try {
-      // Sending the resume data to the server
       const response = await fetch("http://localhost:8000/api/save_resume", {
         method: "POST",
         headers: {
@@ -167,23 +177,22 @@ function App() {
         },
         body: JSON.stringify(updatedResumeData),
       });
-  
+
       const result = await response.json();
-  
+
       if (response.ok) {
         console.log("Resume saved successfully:", result);
 
         //  const jsonBlob = new Blob([JSON.stringify(updatedResumeData, null, 2)], { type: "application/json" });
-        //  saveAs(jsonBlob, "resume.json");  
-
+        //  saveAs(jsonBlob, "resume.json");
       } else {
-        console.error("Error saving resume:", result.detail);  
+        console.error("Error saving resume:", result.detail);
       }
     } catch (error) {
-      console.error("Network error:", error);  
+      console.error("Network error:", error);
     }
   };
-  
+
   const handleCandidateUpdate = (updatedData) => {
     setCandidateDetails(updatedData);
   };
@@ -219,6 +228,10 @@ function App() {
     setWorkExperiences(updatedWorkExperiences);
   };
 
+  const handlebackbuttonClick = () => {
+    navigate("/resume-builder");
+    setIsModalOpen(true);
+  };
 
   // const handleCreateButtonClick = () => {
   //   setIsModalOpen(true);
@@ -265,27 +278,29 @@ function App() {
                 />
               </div>
               {eduhobby.experiance && (
-                <div className="section page-break"   ref={experienceRef}>
+                <div className="section page-break" ref={experienceRef}>
                   <Workexperience
-                   experiance={eduhobby.experiance}
-                   onWorkExperiencesUpdate={handleWorkExperiencesUpdate} />
+                    experiance={eduhobby.experiance}
+                    onWorkExperiencesUpdate={handleWorkExperiencesUpdate}
+                  />
                 </div>
               )}
 
               <div className="section page-break">
-                <Project projectDetails={projectDetails} 
-                        onProjectUpdate={handleProjectUpdate}/>
+                <Project
+                  projectDetails={projectDetails}
+                  onProjectUpdate={handleProjectUpdate}
+                />
               </div>
 
               {eduhobby.edu && (
-                <div className="section page-break"  ref={educationRef}>
+                <div className="section page-break" ref={educationRef}>
                   <EducationAndOther
-                   includeInterests={eduhobby.hobby}
-                   onEducationUpdate={handleEducationUpdate}
-                   />
+                    includeInterests={eduhobby.hobby}
+                    onEducationUpdate={handleEducationUpdate}
+                  />
                 </div>
               )}
-              
             </>
           )
         )}
@@ -303,27 +318,31 @@ function App() {
           <button onClick={saveResume} className="save-btn">
             Save
           </button>
+          <button onClick={handlebackbuttonClick} className="save-btn">
+            Back
+          </button>
         </div>
       )}
+        <Routes>
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/resume-builder"
+              element={
+                <>
+                  <Startmodal 
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    onSubmit={handleModalSubmit}
+                  />
+                  {isModalOpen && <ResumeTable isOpen={isModalOpen} />}
+                </>
+              }
+            />
+          </Route>
+          <Route path="/" element={<AuthPage />} />
+        </Routes>
 
-<Router>
-  <Routes>
-    <Route path="/" element={<AuthPage />} />
-    <Route
-      path="/resume-builder"
-      element={
-        <>
-          <Startmodal 
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onSubmit={handleModalSubmit}
-          />
-          {isModalOpen && <ResumeTable isOpen={isModalOpen} />}
-        </>
-      }
-    />
-  </Routes>
-</Router>
+      {/* </Router> */}
       {/* <Startmodal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

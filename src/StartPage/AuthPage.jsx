@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthPage = () => {
@@ -6,44 +6,111 @@ const AuthPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState(""); 
+  const [authError, setAuthError] = useState("");
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState(""); 
 
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
 
+  const handleEmailChange = useCallback((e) => {
+    const value = e.target.value;
+    setEmail(value);    
+  
     if (!value.endsWith("@gammaedge.io")) {
       setEmailError("Email must be a @gammaedge.io account");
     } else {
-      setEmailError(""); 
+      setEmailError("");
     }
-  };
+  }, []);
 
-  const handleLogin = (e) => {
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  //   if (storedUser && storedUser.username === username && storedUser.password === password) {
+  //     localStorage.setItem("isAuthenticated", "true");
+  //     navigate("/resume-builder"); 
+  //   } else {
+  //     alert("Invalid credentials. Please try again or register.");
+  //   }
+  // };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem("user"));
-
-    if (storedUser && storedUser.username === username && storedUser.password === password) {
-      localStorage.setItem("isAuthenticated", "true");
-      navigate("/resume-builder"); 
-    } else {
-      alert("Invalid credentials. Please try again or register.");
-    }
-  };
+    setAuthError("");
   
-  const handleRegister = (e) => {
+    try {
+      const response = await fetch("http://localhost:8000/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      console.log("Response status:", response.status);
+  
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
+      }
+  
+      const data = await response.json();
+      console.log("Received data:", data); 
+  
+      if (data.token) {
+        console.log("Saving token:", data.token);
+        localStorage.setItem("token", data.token);
+        console.log("Navigating to /resume-builder");
+        navigate("/resume-builder");
+      } else {
+        throw new Error("Token not received");
+      }
+  
+    } catch (error) {
+      console.error("Login error:", error);
+      setAuthError(error.message);
+    }
+  };
+
+  
+  // const handleRegister = (e) => {
+  //   e.preventDefault();
+
+  //   if (!email.endsWith("@gammaedge.io")) {
+  //     setEmailError("Please use an @gammaedge.io email");
+  //     return;
+  //   }
+
+  //   const newUser = { username, password, email };
+  //   localStorage.setItem("user", JSON.stringify(newUser));
+  //   alert("Registration successful! You can now log in.");
+  //   setIsRegistering(false);
+  // };
+
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setAuthError("");
 
     if (!email.endsWith("@gammaedge.io")) {
       setEmailError("Please use an @gammaedge.io email");
       return;
     }
 
-    const newUser = { username, password, email };
-    localStorage.setItem("user", JSON.stringify(newUser));
-    alert("Registration successful! You can now log in.");
-    setIsRegistering(false);
+    try {
+      const response = await fetch("http://localhost:8000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.detail || "Registration failed");
+      }
+
+      alert("Registration successful! You can now log in.");
+      setIsRegistering(false);
+    } catch (error) {
+      setAuthError(error.message);
+    }
   };
 
   const styles = {
@@ -154,7 +221,7 @@ const AuthPage = () => {
             style={styles.input}
           />
         </div>
-        
+        {authError && <p style={styles.error}>{authError}</p>}
         <button
           type="submit"
           style={styles.submit}
@@ -173,7 +240,9 @@ const AuthPage = () => {
           ) : (
             <>
               No account?{" "}
-              <button style={styles.signupLinkAnchor} onClick={() => setIsRegistering(true)}>Sign up</button>
+              {/* <button style={styles.signupLinkAnchor} onClick={() => setIsRegistering(true)}>Sign up</button> */}
+              <button type="button" style={styles.signupLinkAnchor} onClick={() => setIsRegistering(true)}>Sign up</button>
+
             </>
           )}
         </p>

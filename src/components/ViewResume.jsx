@@ -34,6 +34,7 @@ function ViewResume({ resume, onClose,fetchResumes }) {
     hobby: false,
     experiance: false,
   });
+    const [realcandidatename, setRealCandidatename] = useState("");
   const [workExperiences, setWorkExperiences] = useState([]);
   const [educationData, setEducationData] = useState({
     clgname: "",
@@ -61,6 +62,7 @@ function ViewResume({ resume, onClose,fetchResumes }) {
       setWorkExperiences(resume.workExperiences || []);
       setEducationData(resume.educationData || { clgname: "", clgyear: "" });
       setEduhobby(resume.eduhobby || { edu: false, hobby: false, experiance: false });
+      setRealCandidatename(resume.realcandidatename || '')
 
       if (resume.candidateDetails?.name && resume.candidateDetails?.role) {
         document.title = `${resume.candidateDetails.name}_${resume.candidateDetails.role}_Resume`;
@@ -108,6 +110,7 @@ function ViewResume({ resume, onClose,fetchResumes }) {
       eduhobby,
       workExperiences,
       educationData,
+      realcandidatename,
       parentId: resume._id || null,
     };
 

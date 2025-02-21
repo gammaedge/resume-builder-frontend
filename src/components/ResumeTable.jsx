@@ -5,10 +5,9 @@ import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net-responsive-dt";
 import ViewResume from "./ViewResume";
 
-const ResumeTable = ({ isOpen}) => {
+const ResumeTable = () => {
   const [resumes, setResumes] = useState([]);
   const [selectedResume, setSelectedResume] = useState(null);
-
   
   const fetchResumes = async () => {
       try {
@@ -137,6 +136,7 @@ const ResumeTable = ({ isOpen}) => {
               <tr>
                 <th style={styles.header}>Name</th>
                 <th style={styles.header}>Role</th>
+                <th style={styles.header}>Remarks</th>
                 <th style={styles.header}>Actions</th>
               </tr>
             </thead>
@@ -145,6 +145,7 @@ const ResumeTable = ({ isOpen}) => {
                 <tr key={index}>
                   <td style={styles.cell}>{resume.candidateDetails.name}</td>
                   <td style={styles.cell}>{resume.candidateDetails.role}</td>
+                  <td style={styles.cell}>{resume.realcandidatename}</td>   
                   <td style={styles.cell}>
                     {/* <button
                       style={styles.button}
